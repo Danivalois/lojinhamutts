@@ -18,7 +18,8 @@ load_dotenv()  # Loads .env into os.environ
 
 
 
-DEBUG = os.getenv("DEBUG", "False") == "True"
+#DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = "True"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback_key_for_debug")
 
