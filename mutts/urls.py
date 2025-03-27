@@ -6,6 +6,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import handler404
 from checkouts.views import custom_404_view  # ✅ Import your custom 404 view
+from django.http import HttpResponse
+
+urlpatterns = [
+    path("health/", lambda request: HttpResponse("OK")),
+    # your other paths...
+]
+
 
 handler404 = custom_404_view
 
