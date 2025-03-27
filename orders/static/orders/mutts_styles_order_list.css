@@ -1,0 +1,156 @@
+@font-face {
+    font-family: 'Signika Local';
+    src: url('/static/fonts/Signika-Regular.woff2') format('woff2'),
+         url('/static/fonts/Signika-Regular.ttf') format('truetype'),
+         url('/static/fonts/Signika-Bold.ttf') format('truetype'),
+         url('/static/fonts/Signika-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+  font-family: 'Signika';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/signika/v25/vEFO2_JTCgwQ5ejvMV0Ox_Kg1UwJ0tKfX6bBjM4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  
+  
+  /* reset */
+  html, body,p,a,ul,li{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  }
+  
+  
+  
+  
+  :root{
+    --primary: #f2f2f2;
+    --secondary: #0e0080;
+    --shadow: #8B8B8B;
+    --placeholder: #dddddd;
+    --cod-width: 300px;
+  }
+  
+  
+  html {
+    font-size: 30px;
+    height: 100%; 
+    margin-top: 0px;
+    padding: 0;
+  }
+  
+ 
+  
+  .overallwrapper{
+    display: grid;
+    grid-template-columns: 100%;
+    margin: 60px 0px 0px 0px;
+  }
+  
+  .wrapper {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    
+   
+
+  }
+
+
+
+  
+  /* One customer block = one grid */
+  .customer_block {
+    display: grid;
+    grid-template-columns: 36% 28% 28% 8%;
+    grid-auto-rows: auto;
+    gap: 0px;
+    padding: 0px;
+    margin: 10px 0px 0px 10px;
+    border-bottom: 1px solid rgb(126, 126, 126);
+    background-color: none;
+    
+  }
+  
+  
+  .order_1 {
+    grid-column: 1;
+    grid-row: 1;
+    font-weight: bold;
+    align-self: center;
+    justify-self: start;
+    white-space: nowrap;           
+    overflow: hidden;            
+    text-overflow: ellipsis;  
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    font-size: 0.6em;
+    color: var(--secondary) !important;
+    text-shadow: 4px 4px 6px var(--shadow);
+  }
+  .order_2 {
+    grid-column: 2;
+    grid-row: 1;
+
+  }
+  .order_3 {
+    grid-column: 3;
+    grid-row: 1;
+
+  }
+  .order_delete {
+    grid-column: 4;
+    grid-row: 1 / span 2; /* spans from first to last row */
+  }
+  .order_delete img {
+    width: 60%;
+  }
+
+  .order_4 {
+    grid-column: 1;
+    grid-row: 2;
+
+  }
+  .order_5 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .order_6 {
+    grid-column: 3;
+    grid-row: 2;
+  }
+  
+
+  
+
+
+.order_2,
+.order_3,
+.order_4,
+.order_5,
+.order_6,
+.order_5
+{
+max-width: 100%;
+white-space: nowrap;           
+overflow: hidden;            
+text-overflow: ellipsis;  
+align-self: center;
+justify-self: start;
+font-family: 'Signika Local', 'Signika', sans-serif;
+font-size: 0.6em;
+color: var(--secondary) !important;
+text-shadow: 4px 4px 6px var(--shadow);
+}
+ 
+  
+  .final{
+    padding: 0px 0px 100px 0px;
+  }
+  

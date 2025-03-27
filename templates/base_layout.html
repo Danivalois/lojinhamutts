@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <link rel="icon" href="{% static 'favicon.ico' %}">
+        <meta charset="utf-8">
+    </head>
+
+ 
+      <div class="main-header">
+          <div class="logo_mutts">
+            <img src="{% static 'logo_mutts.png' %}" alt="logo_mutts">
+          </div>
+      </div>
+
+
+      <div class="wrapper">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <footer>
+        <div class="copyright">Copyright © 2025 Lojinha Mutts</div>
+        <ul class="social">
+            <li>
+                <a href="https://www.instagram.com/muttspets/">
+                    <img src="{% static 'ig_icon.png' %}" alt="ig_icon">
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+
+
+
+
+
+  </body>
+  
+</html>

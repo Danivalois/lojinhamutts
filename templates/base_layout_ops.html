@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <link rel="stylesheet" href="{% static 'styles_ops_product.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <header>
+
+    <div class="icons">
+      <div class="add_product">
+        <img src="{% static 'plus_b_icon.png' %}" alt="addproduct"></a>
+      </div>
+      <div class="customer">
+        <div class="dot">
+          <img src="{% static 'dot_b_icon.png' %}" alt="product_indicator">
+        </div>
+        <div class="icon_img">
+            <img src="{% static 'customer_b_icon.png' %}" alt="customer_list" >
+          </a>
+        </div>
+      </div> 
+      <div class="product">
+        <div class="dot">
+          <img src="{% static 'dot_b_icon.png' %}" alt="product_indicator">
+        </div>
+        <div class="icon_img">
+            <img src="{% static 'product_b_icon.png' %}" alt="product_list" >
+          </a>
+        </div>
+      </div>
+      <div class="orders">
+        <div class="dot">
+          <img src="{% static 'dot_b_icon.png' %}" alt="product_indicator">
+        </div>
+        <div class="icon_img">
+            <img src="{% static 'order_b_icon.png' %}" alt="order_list" >
+          </a>
+        </div>
+      </div>
+      <div class="logout">
+        <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+            {% csrf_token %}
+              <img src="{% static 'logout_b_icon.png' %}"  alt="Logout">
+            </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+
+
+
+    <div id="content">  <!-- Changed "wrapper" to "content" and ID -->
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    
+    
+</body>
+</html>

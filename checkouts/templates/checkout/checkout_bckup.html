@@ -1,0 +1,156 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content %}
+
+
+
+    <head>
+        <link rel="stylesheet" href="{% static 'mutts_styles_checkout.css' %}">
+    </head>
+
+    <form method="POST" action="{% url 'checkouts:validate_cpf' %}" readonly>
+        {% csrf_token %}
+
+        
+        <input type="hidden" name="customer_street" value="{{ form.customer_street.value }}">
+        <input type="hidden" name="customer_neighborhood" value="{{ form.customer_neighborhood.value }}">
+        <input type="hidden" name="customer_city" value="{{ form.customer_city.value }}">
+        <input type= "hidden" name="customer_state" value="{{ form.customer_state.value }}">
+        <input type="hidden" name="customer_zip_code" value="{{ form.customer_zip_code.value }}">
+        <input type="hidden" name="price_sedex" value="{{ form.price_sedex.value }}">
+        <input type="hidden" name="leadtime_sedex" value="{{ form.leadtime_sedex.value}}">
+        <input type="hidden" name="total_sedex" value="{{ form.total_sedex.value }}">
+        <input type="hidden" name="price_pac" value="{{ form.price_pac.value }}">
+        <input type="hidden" name="leadtime_pac" value="{{ form.leadtime_pac.value}}">
+        <input type="hidden" name="total_pac" value="{{ form.total_pac.value }}">   
+        <input type="hidden" name="price_minipac" value="{{ form.price_minipac.value }}">
+        <input type="hidden" name="leadtime_minipac" value="{{ form.leadtime_minipac.value}}">
+        <input type="hidden" name="total_minipac" value="{{ form.total_minipac.value }}">   
+        <input type="hidden" name="price_jadlog_exp" value="{{ form.price_jadlog_exp.value }}">
+        <input type="hidden" name="leadtime_jadlog_exp" value="{{ form.leadtime_jadlog_exp.value}}">
+        <input type="hidden" name="total_jadlog_exp" value="{{ form.total_jadlog_exp.value }}">
+        
+
+    <div class="grade_product">
+        <div class="product_image">
+            {% if form.product_image_url.value %}
+                <img src="{{ form.product_image_url.value }}" alt="Product Image" width="300">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>    
+        <div class="desc_up">
+          <p>Descrição:</p>
+          <input type="text" name="product_short_description" value="{{ form.product_short_description.value }}" readonly>
+          <p>Preço Unitário (R$):</p>
+          <input type="number" name="product_unit_price" value="{{ form.product_unit_price.value }}" readonly>
+          <p>Quantitade:</p>
+          <input type="text" name="order_quantity" value="{{ form.order_quantity.value }}" readonly>
+          <div class="product_code">
+          <p><label for="product_code">Cód.produto:</label></p>
+          <input type="text" name="product_code" value="{{ form.product_code.value }}" readonly>
+          </div>
+        </div>
+    </div>
+
+        <h6>IDENTIFICAÇÃO</h6>
+    <div class="form">
+        <label for="customer_name">Nome Completo:</label>
+        <input type="text" name="customer_name" value="{% if form.customer_name.value and form.customer_name.value != 'None' %}{{ form.customer_name.value }}{% else %}{% endif %}"><br>
+        <label for="customer_cpf">CPF:</label>
+        <input type="text" name="customer_cpf" value="{% if form.customer_cpf.value and form.customer_cpf.value != 'None' %}{{ form.customer_cpf.value }}{% else %}{% endif %}"><br>
+        <label for="customer_phone">Telefone:</label>
+        <input type="text" name="customer_phone" value="{% if form.customer_phone.value and form.customer_phone.value != 'None' %}{{ form.customer_phone.value }}{% else %}{% endif %}"><br>
+        <label for="customer_email" readonly>E-mail:</label>
+        <input type="email" name="customer_email" value="{% if form.customer_email.value and form.customer_email.value != 'None' %}{{ form.customer_email.value }}{% else %}{% endif %}"><br>
+        <label for="customer_zip_code">CEP:</label>
+        <div class="somenteleitura">
+            <p>{{ form.customer_zip_code.value }}</p>
+        </div>
+        <label for="customer_street">Rua/Av/Praça:</label>
+        <div class="somenteleitura">       
+            <p>{{ form.customer_street.value }}</p>
+        </div>
+        <label for="customer_house_number">Número:</label>
+        <input type="text" name="customer_house_number" value="{% if form.customer_house_number.value and form.customer_house_number.value != 'None' %}{{ form.customer_house_number.value }}{% else %}{% endif %}"><br>
+        <label for="customer_complement">Complemento:</label>
+        <input type="text" name="customer_complement" value="{% if form.customer_complement.value and form.customer_complement.value != 'None' %}{{ form.customer_complement.value }}{% else %}{% endif %}"><br>
+        <label for="customer_neighborhood">Bairro:</label>
+        <div class="somenteleitura">        
+            <p>{{ form.customer_neighborhood.value }}</p>
+        </div>    
+        <label for="customer_city">Cidade:</label>
+        <div class="somenteleitura">        
+            <p>{{ form.customer_city.value }}</p>
+        </div>    
+        <label for="customer_state">UF:</label>
+        <div class="somenteleitura">        
+            <p>{{ form.customer_state.value }}</p>
+        </div>    
+    </div>    
+   
+
+    <h6>FRETE</h6>
+    <div class="flex_container">
+        <div class="freight_container_1">
+            <div class="freight_table_1">
+                <img src="{% static 'minipac_256.png' %}" alt="minipac_fforwarder" width="350"><br>
+                <label for="fcost_minipac">Frete (R$):</label><br>
+                <p>{{ form.price_minipac.value }}</p><br>
+                <label for="leadtime_minipac">Prazo (dia):</label><br>
+                <p>{{ form.leadtime_minipac.value}}</p><br>
+                <label for="order_total_minipac">Valor Total Pedido (R$):</label><br>
+                <p>{{ form.total_minipac.value }}</p>   
+            </div>
+            <div class="freight_table_2">
+                <img src="{% static 'pac_256.png' %}" alt="pac_fforwarder" width="350"><br>
+                <label for="fcost_pac">Frete (R$):</label><br>
+                <p>{{ form.price_pac.value }}</p><br>
+                <label for="leadtime_pac">Prazo (dia):</label><br>
+                <p>{{ form.leadtime_pac.value}}</p><br>
+                <label for="order_total_pac">Valor Total Pedido (R$):</label><br>
+                <p>{{ form.total_pac.value }}</p>          
+            </div>
+        </div>    
+        <div class="freight_container_2">    
+            <div class="freight_table_3">
+                <img src="{% static 'jadlog_256.png' %}" alt="jadlog_fforwarder" width="350"><br>
+                <label for="fcost_jadlog">Frete (R$):</label><br>
+                <p>{{ form.price_jadlog_exp.value }}</p><br>
+                <label for="leadtime_jadlog">Prazo (dia):</label><br>
+                <p>{{ form.leadtime_jadlog_exp.value}}</p><br>
+                <label for="order_total_jadlog">Valor Total Pedido (R$):</label><br>
+                <p>{{ form.total_jadlog_exp.value }}</p>
+            </div>
+            <div class="freight_table_4">
+                <img src="{% static 'sedex_256.png' %}" alt="sedex_fforwarder" width="350"><br>
+                <label for="fcost_sedex">Frete (R$):</label><br>
+                <p>{{ form.price_sedex.value }}</p><br>
+                <label for="leadtime_sedex">Prazo (dia):</label><br>
+                <p>{{ form.leadtime_sedex.value}}</p><br>
+                <label for="order_total_sedex">Valor Total Pedido (R$):</label><br>
+                <p>{{ form.total_sedex.value }}</p>
+            </div>
+        </div>        
+    </div>
+    <div class="final_div">
+        <div class="terms_use">
+            <label for="terms-checkbox">
+            Concordo com os <a href="terms_use.html" >Termos de Uso.    </a>
+            </label>  
+            <input type="checkbox" id="terms-checkbox" >
+        </div>
+        <div class="logo_mp">
+            <img src="{% static 'mercado-pago.svg' %}" alt="POS" width="300">
+        </div>
+    </div>
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <button type="submit">Ir para Pagamento</button>
+</form>
+{% endblock %}

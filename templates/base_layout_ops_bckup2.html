@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <body>
+    <head>
+        <link rel="stylesheet" href="{% static 'styles_ops.css' %}">
+        <link rel="icon" href="{% static 'favicon.ico' %}">
+        <meta charset="utf-8">
+    </head>
+
+ 
+      <div class="main-header">
+          <div class="logo_mutts">
+            <img src="{% static 'logo_mutts.png' %}" alt="logo_mutts">
+          </div>
+      </div>
+
+
+      <div class="wrapper">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <footer>
+        <div class="icons">
+            <ul class="footer_list">
+                <li class="product_indicator">
+                    <img src="{% static 'dot_icon.png' %}" alt="product_indicator">
+                </li>
+            </ul>
+            
+            
+            <ul class="customer">
+                <li>
+                    <a href="{% url 'customers:customer_list' %}">
+                        <img src="{% static 'customer_icon.png' %}" alt="customer_list" width="130">
+                    </a>
+                </li>
+            </ul>
+            <ul class="footer_list">
+                <li class="product_indicator">
+                    <img src="{% static 'dot_icon.png' %}" alt="product_indicator">
+                </li>
+            </ul>            
+    
+            <ul class="product">
+                <li>
+                    <a href="{% url 'products:product_list' %}">
+                        <img src="{% static 'product_icon.png' %}" alt="product_list" width="120">
+                    </a>
+                </li>
+            </ul>        
+            <ul class="footer_list">
+                <li class="product_indicator">
+                    <img src="{% static 'dot_icon.png' %}" alt="product_indicator">
+                </li>
+            </ul>
+            
+            <ul class="orders">
+                <li>
+                    <a href="{% url 'orders:order_list' %}" >
+                        <img src="{% static 'order_icon.png' %}" alt="order_list" width="80">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+
+
+
+
+
+  </body>
+  
+</html>
+

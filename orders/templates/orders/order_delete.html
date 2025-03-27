@@ -1,0 +1,33 @@
+{% extends 'base_layout_ops_order.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'orders/mutts_styles_order_delete.css' %}">
+<form class="site-form" action="{% url 'orders:order_delete' order.order_ID %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="wrapper">
+            <div class="delete-customer">    
+                <div class="order_id">
+                    <p>Número da Ordem:</p>
+                    <input type="text" name="order_ID" value="{{ order.order_ID }}" readonly>
+                </div>
+                <div class="order_customer">
+                    <p>Nome/CPF do Cliente:</p>
+                    <input type="text" name="order_customer" value="{{ order.order_customer }}" readonly>
+                </div>
+                <div class="order_product">
+                    <p>Descrição do Produto:</p>
+                    <input type="text" name="order_product" value="{{ order.order_product }}" readonly>
+                </div>      
+        
+
+            </div>
+            <div class="label_confirmation">
+                <h6>Essa Ordem será <strong>DELETADA</strong>, CONFIRMA?</h6>
+            </div>
+            <div class="form3">
+            <button type="submit">Sim, confirmo</button>
+            </div>
+        </div>
+</form>
+{% endblock %}
+

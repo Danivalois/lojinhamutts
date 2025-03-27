@@ -1,0 +1,133 @@
+@font-face {
+  font-family: 'Signika Local';
+  src: url('/static/fonts/Signika-Regular.woff2') format('woff2'),
+       url('/static/fonts/Signika-Regular.ttf') format('truetype'),
+       url('/static/fonts/Signika-Bold.ttf') format('truetype'),
+       url('/static/fonts/Signika-Bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Signika';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/signika/v25/vEFO2_JTCgwQ5ejvMV0Ox_Kg1UwJ0tKfX6bBjM4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* reset */
+html, body,p,a,ul,li{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+:root{
+    --primary: #f2f2f2;
+    --secondary: #0A0B5B;
+  }
+html body {
+    font-size: 30px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    flex: 1; /* Pushes footer to the bottom */
+}
+/* Mobile size for all screens */
+.logo_mutts img {
+  width: 250px; /* Default size */
+  height: auto; /* Keeps aspect ratio */
+  padding: 20px 0px 10px 0px;
+}
+
+
+
+.main-header {
+  position: fixed;
+  background-color: #f2f2f2;
+  margin: 0px;
+  padding: 0px 0px 0px 0px;
+  border-radius: 0px 0px 20px 20px;  
+  display: flex; /* Enables flexbox */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  width:100%;
+}
+
+
+body {
+    min-height: 100vh; /* Ensures full viewport height */
+    background-image: url("background_mutts.png");
+    display: flex;
+    flex-direction: column;
+    margin: 0; /* Remove default body margin */
+}
+
+footer {
+    position: relative; /* Remove 'fixed' to prevent overlap */
+    display: flex;
+    width: 100%;
+    gap: 0px;
+    margin-top: 310px;
+    background: #0e0080;
+    padding: 0px 0px 0px 0px;
+    box-sizing: border-box; /* Include padding in width */
+
+}
+
+.copyright {
+  font-size: 0.8em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #8B8B8B;
+  margin-left: 0px; /* Adds spacing from the left */
+  text-align: left;
+  justify-content: left;
+  align-items: left;
+  width: 50%;
+  padding: 30px 0px 60px 15px;
+}
+
+.social {
+  text-align: right;
+  list-style: none; /* Removes bullet points */
+  width: 50%;
+
+
+}
+.social li {
+  text-align: right;
+}
+.social img {
+
+  width: 50px; /* Resize social icons */
+  text-align: right;
+  margin: 20px 30px 0px 0px;
+}
+
+/* desktop */
+
+@media screen and (min-width: 1200px){
+  html {
+    font-size: 15px;
+    height: 100%; /* Ensure the HTML and body take up the full viewport */
+    margin: 0;
+    padding: 0;
+}
+
+.main-header {
+  background-color: #f2f2f2;
+  margin: 0px;
+  padding: 10px 0px 10px 0px;
+  border-radius: 0px 0px 15px 15px;  
+  display: flex; /* Enables flexbox */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+}
+.logo_mutts img {
+  width: 250px; /* Smaller logo for large screens */
+}
+}

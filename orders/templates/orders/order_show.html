@@ -1,0 +1,21 @@
+{% extends 'base_layout_ops_order.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'orders/mutts_styles_order_show.css' %}">
+<form class="site-form" action="{% url 'orders:order_show' order.order_ID %}" method="post" enctype="multipart/form-data" >
+<div class="create-product">
+            {% csrf_token %}
+            {{ form.as_p }}  
+            <div class="label_total_amount">
+                <p>Valor Total do Pedido:</p>
+            </div>
+            <div class="total_amount">
+               <p>{{ order_total_price }}</p>
+            </div>
+            <div class="final">
+                <button type="submit" value="Save">Alterar</button>
+            </div>    
+</div>
+</form>    
+{% endblock %}
+

@@ -1,0 +1,129 @@
+/* reset */
+html, body, p, a, ul, li {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+:root {
+  --primary: #f2f2f2;
+  --secondary: #0A0B5B;
+}
+
+html, body {
+  font-size: 30px; /* You might want to use a relative unit like rem here */
+  height: 100%; /* Ensure the entire viewport is covered */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh; /* Ensures full viewport height */
+  background-image: url("background_mutts.png");
+  background-size: cover; /* Cover the whole area, will resize to fit the container*/
+  background-repeat: no-repeat; /* Do not repeat the image */
+  display: flex;
+  flex-direction: column;
+}
+
+#content {
+  flex: 1; /* Allows content to grow and fill available space, pushing the footer down */
+  padding-top: 80px; /* Add spacing for the fixed header */
+}
+
+/* Mobile size for all screens */
+.logo_mutts img {
+  width: 140px; /* Default size */
+  height: auto; /* Keeps aspect ratio */
+  padding: 10px 0px 7px 0px;
+}
+
+.main-header {
+  z-index: 100; /* Ensure header stays on top */
+  position: fixed; /* Fixed position */
+  top: 0;         /* Stick to the top */
+  left: 0;        /* Stick to the left */
+  background-color: #f2f2f2;
+  width: 100%;
+  border-radius: 0px 0px 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+
+
+
+
+
+
+footer {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  bottom: 0; /* Stick to the bottom */
+  left: 0;   /* Stick to the left */
+  width: 100%;
+}
+
+.icons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; 
+  grid-auto-rows: minmax(45px, auto);
+  justify-items: end;
+  align-items: end;
+  width: 100%;  /* Adjust based on your icon sizes */
+  margin: auto; /* Center horizontally */
+  background: var(--secondary);
+  max-width: 100%;
+  padding: 10px 0px 10px 0px;
+  
+ 
+}
+
+.customer{
+  display: grid;
+  grid-template-columns: 10% 90%; 
+  width: 30%;  /* Adjust based on your icon sizes */
+  margin: auto; /* Center horizontally */
+  background: var(--secondary);
+  max-width: 100%;
+  list-style: none;
+
+}
+
+.product{
+  display: grid;
+  grid-template-columns: 10% 90%; 
+  width: 30%;  /* Adjust based on your icon sizes */
+  margin: auto; /* Center horizontally */
+  background: var(--secondary);
+  max-width: 100%;
+  list-style: none;
+}
+
+.orders{
+  display: grid;
+  grid-template-columns: 10% 90%; 
+  width: 30%;  /* Adjust based on your icon sizes */
+  margin: auto; /* Center horizontally */
+  background: var(--secondary);
+  max-width: 100%;
+  list-style: none;
+
+}
+
+li img{
+  width: 90%;
+  margin: 0px 0px 0px 10px;
+  
+  
+}
+
+.footer_list img{
+  align-self: center;
+  width: 9px;
+  margin: 10px 0px 0px 0px;
+  
+}

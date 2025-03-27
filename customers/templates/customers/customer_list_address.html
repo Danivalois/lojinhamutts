@@ -1,0 +1,45 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'customers/mutts_styles_customer_list_address.css' %}">
+
+<div class="overallwrapper">
+
+
+    <div class="wrapper">
+
+
+        {% for address in addresses %}
+        <div class="customer_block">
+            <div class="address_1">{{ address.customer_street }}</div>
+            <div class="address_2">{{ address.customer_house_number }}</div>
+            <div class="address_3">{{ address.customer_complement }}</div>
+            <div class="address_4">{{ address.customer_city }}-{{ address.customer_state }}</div>    
+            <div class="address_5">{{ address.customer_neighborhood }}</div>
+            <div class="address_6">{{ address.customer_zip_code }}</div>
+            {% if address.customer %} 
+                <div class="customer_1">{{ address.customer.customer_name}}</div>
+                <div class="customer_2">{{ address.customer.customer_cpf}}</div>
+            {% else %}
+                <div class="customer_3">Sem CPF associado</div>
+            {% endif %} 
+            <div class="customer_edit">
+                <a href="{% url 'customers:customer_edit' address_id=address.id %}">
+                <img src="{% static 'edit_icon.png' %}" alt="edit">
+                </a>
+            </div>    
+            <div class="customer_delete">
+                <a href="{% url 'customers:customer_delete_address' address_id=address.id %}">
+                <img src="{% static 'delete_icon.png' %}" alt="delete">
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="final">
+    <p> </p>    
+<div>
+{% endblock %}
+

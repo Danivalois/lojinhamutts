@@ -1,0 +1,19 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+
+<h1>Product List</h1>
+
+<div class="products">
+  
+      <div class="product">
+        <img src="{{ MEDIA_URL }}{{ product.product_image_url }}" />
+        <p>{{ product.product_code }}</p>
+        <p>{{ product.product_short_description }}</p>
+        <p>{{ product.product_description_long }}</p>
+
+      </div>
+ 
+</div>
+
+{% endblock %}

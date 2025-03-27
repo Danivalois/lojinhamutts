@@ -1,0 +1,16 @@
+<h2>🎉 Obrigada, {{ order.order_customer.customer_name }}!</h2>
+<p>O seu pedido de número <strong>{{ order.order_ID }}</strong> foi colocado.</p>
+<p><strong>Descrição do Produto:</strong> {{ order.order_product.product_short_description }}</p>
+<p><strong>Código do Produto:</strong> {{ order.order_product.product_code }}</p>
+<p><strong>Quantidade:</strong> {{ order.order_quantity }}</p>
+<p><strong>Serviço de Frete:</strong> {{ order.order_freight_service }}</p>
+<p><strong>Valor do Frete:</strong> R$ {{ order.order_freight_cost }}</p>
+<p><strong>Total Pago:</strong> R$ {{ total_order_amount }}</p>
+<p><strong>Prazo de Entrega:</strong> {{ order.order_leadtime }} days</p>
+<p><strong>Endereço de Entrega:</strong></p>
+<p>{{ order.order_address.customer_street }}, {{ order.order_address.customer_house_number }}</p>
+<p>{{ order.order_address.customer_complement }}</p>
+<p>{{ order.order_address.customer_neighborhood }}</p>
+<p>{{ order.order_address.customer_city }} - {{ order.order_address.customer_state }}</p>
+<p>{{ order.order_address.customer_zip_code }}</p>
+<p>📦 Seu pedido está sendo processado. Avisaremos tão logo o embarque de seu pedido seja realizado.</p>

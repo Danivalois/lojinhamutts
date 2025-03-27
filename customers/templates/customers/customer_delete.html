@@ -1,0 +1,34 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'customers/mutts_styles_customer_delete.css' %}">
+</head>
+<div class="delete-customer">
+    
+    <form class="site-form" action="{% url 'customers:customer_delete' customer.customer_cpf %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="wrapper">
+            <div class="delete-customer">    
+                <div class="cpf">
+                    <p>CPF:</p>
+                    <input type="text" name="customer_cpf" value="{{ customer.customer_cpf }}" readonly>
+                </div>
+                <div class="name">
+                    <p>Nome do Cliente:</p>
+                    <input type="text" name="customer_name" value="{{ customer.customer_name }}" readonly>
+                </div>
+            </div>
+            <p> </p>
+            <p> </p>
+            <div class="label_confirmation">
+            <p>Cliente será <strong>DELETADO</strong>, CONFIRMA?</p>
+            </div>
+            <div class="form3">
+            <button type="submit">Sim, confirmo</button>
+            </div>
+        </div>    
+        </form>
+   
+{% endblock %}

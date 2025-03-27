@@ -1,0 +1,133 @@
+{% extends 'base_layout_ops_product.html' %}
+{% load static %}
+{% load l10n %}
+{% block content %}
+
+
+
+    <div class="create-product">
+        <head>
+            <link rel="stylesheet" href="{% static 'products/mutts_styles_product_edit.css' %}">
+        </head>
+
+
+        <input type= "hidden" name=product_code value="{{ form.product_code.value }}">
+        <input type= "hidden" name=product_short_description value="{{ form.product_short_description.value }}">
+        <input type= "hidden" name=product_description_long value="{{ form.product_description_long.value }}">
+        <input type= "hidden" name=product_category value="{{ form.product_category.value }}">
+        <input type= "hidden" name=product_unit_price value="{{ form.product_unit_price.value }}">
+        <input type= "hidden" name=product_stock value="{{ form.product_stock.value }}">
+        <input type= "hidden" name=product_thumbnail_url value="{{ form.product_thumbnail_url.value }}">
+        <input type= "hidden" name=product_brand value="{{ form.product_brand.value }}">
+        <input type= "hidden" name=product_sku value="{{ form.product_sku.value }}">
+        <input type= "hidden" name=product_weight value="{{ form.product_weight.value }}">
+        <input type= "hidden" name=product_dimensions value="{{ form.product_dimensions.value }}">
+        <input type= "hidden" name=product_length value="{{ form.product_length.value }}">
+        <input type= "hidden" name=product_width value="{{ form.product_width.value }}">
+        <input type= "hidden" name=product_height value="{{ form.product_height.value }}">
+        <input type= "hidden" name=product_image_url value="{{ form.product_image_url.value }}">
+        <input type= "hidden" name=product_is_active value="{{ form.product_is_active.value }}">
+
+
+        <form class="site-form" action="{% url 'products:product_edit' product.product_code %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="wrapper">
+                <p>{{ form.product_code.label_tag }}</p>
+                <input type="text" name="product_code" class="all_fields" id="id_product_code" value="{{ form.product_code.value }}" readonly>
+
+                <p>{{ form.product_short_description.label_tag }}</p>
+                <input type="text" name="product_short_description" class="all_fields" value="{{ form.product_short_description.value }}">
+
+                <p>{{ form.product_description_long.label_tag }}</p>
+                <input type="text" name="product_description_long" class="all_fields" value="{{ form.product_description_long.value }}">
+
+                <p>{{ form.product_category.label_tag }}</p>
+                {{ form.product_category }}
+
+               
+                <p>{{ form.product_unit_price.label_tag }}</p>
+                {% with form.initial.product_unit_price|stringformat:"0.2f" as formatted_price %}
+                <input type="number" step="0.01" name="product_unit_price" value="{{ formatted_price }}">
+                {% endwith %}
+              
+
+              
+
+                <p>{{ form.product_stock.label_tag }}</p>
+                <input type="text" name="product_stock" class="all_fields" value="{{ form.product_stock.value }}">
+
+                <p>{{ form.product_thumbnail_url.label_tag }}</p>
+                <input type="text" name="product_thumbnail_url" class="all_fields" value="{{ form.product_thumbnail_url.value|default:'' }}">
+
+                <p>{{ form.product_brand.label_tag }}</p>
+                <input type="text" name="product_brand" class="all_fields" value="{{ form.product_brand.value|default:'' }}">
+
+                <p>{{ form.product_sku.label_tag }}</p>
+                <input type="text" name="product_sku" class="all_fields" value="{{ form.product_sku.value|default:'' }}">
+
+                <p>{{ form.product_dimensions.label_tag }}</p>
+                <input type="text" name="product_dimensions" class="all_fields" value="{{ form.product_dimensions.value|default:'' }}">
+
+                <p>{{ form.product_weight.label_tag }}</p>
+                
+                {% with form.initial.product_weight|stringformat:"0.2f" as formatted_price %}
+                <input type="number" step="0.01" name="product_weight" value="{{ formatted_price }}">
+                {% endwith %}
+                <p>{{ form.product_height.label_tag }}</p>
+                {% with form.initial.product_height|stringformat:"0.2f" as formatted_price %}
+                <input type="number" step="0.01" name="product_height" value="{{ formatted_price }}">
+                {% endwith %}    
+                
+                <p>{{ form.product_width.label_tag }}</p>
+                {% with form.initial.product_width|stringformat:"0.2f" as formatted_price %}
+                <input type="number" step="0.01" name="product_width" value="{{ formatted_price }}">
+                {% endwith %}
+                <p>{{ form.product_length.label_tag }}</p>
+                {% with form.initial.product_length|stringformat:"0.2f" as formatted_price %}
+                <input type="number" step="0.01" name="product_length" value="{{ formatted_price }}">
+                {% endwith %}
+
+                <p>{{ form.product_image_url.label_tag }}</p>
+                <!-- Show existing image -->
+                {% if form.instance.product_image_url %}
+                    <img src="{{ form.instance.product_image_url.url }}" alt="Current image" style="max-width: 100px;">
+                {% else %}
+                    <p>Imagem não cadastrada.</p>
+                {% endif %}
+                <!-- Input for uploading a new one -->
+                <input type="file" name="product_image_url" class="all_fields">
+
+                <p>{{ form.product_is_active.label_tag }}</p>
+                <input type="checkbox" name="product_is_active" {% if form.product_is_active.value %}checked{% endif %}>
+            </div>
+
+            <div class="final">
+                <p> </p><br>
+            </div>
+
+            <input type="submit" value="Alterar">
+
+            <div class="final">
+                <p> </p><br>
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Form Errors:</strong>
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ field }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <p> </p><br>
+            </div>
+        </form>
+    </div>
+
+
+
+
+{% endblock %}

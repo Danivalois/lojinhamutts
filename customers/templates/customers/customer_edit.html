@@ -1,0 +1,94 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'customers/mutts_styles_customer_edit.css' %}">
+</head>
+    <div class="edit-customer">
+        <form class="site-form" action="{% url 'customers:customer_edit' address_id=address.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <label for="id_customer_zip_code">CEP:</label>
+                <input type="text" name="customer_zip_code" value="{{ address_form.customer_zip_code.value }}" maxlength="9" required id="id_customer_zip_code">
+                <label for="id_customer_street">Rua/Av./etc.:</label>
+                <input type="text" name="customer_street" value="{{ address_form.customer_street.value }}" maxlength="255" required id="id_customer_street">
+                <label for="id_customer_neighborhood">Bairro:</label>
+                <input type="text" name="customer_neighborhood" value="{{ address_form.customer_neighborhood.value }}" maxlength="100" required id="id_customer_neighborhood">
+                <label for="id_customer_city">Cidade:</label>
+                <input type="text" name="customer_city" value="{{ address_form.customer_city.value }}" maxlength="100" required id="id_customer_city">
+                <label for="id_customer_state">Estado:</label>
+                <input type="text" name="customer_state" value="{{ address_form.customer_state.value }}" maxlength="2" required id="id_customer_state">
+                <label for="id_customer_house_number">Número:</label>
+                <input type="text" name="customer_house_number" value="{{ address_form.customer_house_number.value }}" maxlength="10" required id="id_customer_house_number">
+                <label for="id_customer_complement">Complemento:</label>
+                <input type="text" name="customer_complement" value="{{ address_form.customer_complement.value }}" maxlength="100" id="id_customer_complement">
+                <label for="id_customer_phone">Celular:</label>
+                <input type="text" name="customer_phone" value="{{ address_form.customer_phone.value }}" maxlength="15" id="id_customer_phone">
+                <label for="id_customer_email">E-mail:</label>
+                <input type="email" name="customer_email" value="{{ address_form.customer_email.value }}" maxlength="254" id="id_customer_email">
+        </form>
+        <div class="final">
+            <p> </p>
+            <button type="submit" value="Save">Alterar</button>
+            <p> </p>
+            <p> </p>
+        </div>    
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function customer_zip_code_field() {
+        console.log("is loading");
+        $('#id_customer_zip_code').on('blur', function() {  
+            console.log("I am running, 3 2 1");
+            var zip_code = $(this).val().replace(/\D/g, '');  
+
+            if (zip_code.length !== 8) {
+                console.log("I am running code 1");
+                $('#id_customer_street').val('');
+                $('#id_customer_neighborhood').val('');
+                $('#id_customer_city').val('');
+                $('#id_customer_state').val('');
+                $('#id_customer_zip_code').val('');
+                alert('CEP must have 8 digits.');
+                return;
+            }
+
+            $.ajax({
+                url: 'https://viacep.com.br/ws/' + zip_code + '/json/',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log("JS Success, data", data);
+                    if (data.erro) {
+                        $('#id_customer_zip_code').val('');
+                        alert('Invalid CEP.');
+                    } else {
+                        $('#id_customer_street').val(data.logradouro).prop('readonly', true);
+                        $('#id_customer_neighborhood').val(data.bairro).prop('readonly', true);
+                        $('#id_customer_city').val(data.localidade).prop('readonly', true);
+                        $('#id_customer_state').val(data.uf).prop('readonly', true);
+                    }
+                },
+                error: function() {
+                    alert('Error connecting to ViaCEP.');
+                }
+            });
+        });
+    }
+    $(document).ready(customer_zip_code_field);
+</script>
+{% endblock %}
+
+

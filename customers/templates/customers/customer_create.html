@@ -1,0 +1,65 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+{% block content %}
+
+
+    <div class="create-customer">
+        <head>
+            <link rel="stylesheet" href="{% static 'customers/mutts_styles_customer_create.css' %}">
+        </head>
+            <form class="customer-form" method="post">
+                {% csrf_token %}
+              
+                {{ customer_form.as_p }}
+                {{ address_form.as_p }}
+
+                <div class="final">
+                   <button type="submit">Adicionar</button>
+                </div>
+            </form>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function customer_zip_code_field() {
+        console.log("is loading");
+        $('#id_customer_zip_code').on('blur', function() {  
+            console.log("I am running, 3 2 1");
+            var zip_code = $(this).val().replace(/\D/g, '');  
+
+            if (zip_code.length !== 8) {
+                console.log("I am running code 1");
+                $('#id_customer_street').val('');
+                $('#id_customer_neighborhood').val('');
+                $('#id_customer_city').val('');
+                $('#id_customer_state').val('');
+                $('#id_customer_zip_code').val('');
+                alert('CEP must have 8 digits.');
+                return;
+            }
+
+            $.ajax({
+                url: 'https://viacep.com.br/ws/' + zip_code + '/json/',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log("JS Success, data", data);
+                    if (data.erro) {
+                        alert('Invalid CEP.')
+                        $('#id_customer_zip_code').val('');
+                    } else {
+                        $('#id_customer_street').val(data.logradouro).prop('readonly', true);
+                        $('#id_customer_neighborhood').val(data.bairro).prop('readonly', true);
+                        $('#id_customer_city').val(data.localidade).prop('readonly', true);
+                        $('#id_customer_state').val(data.uf).prop('readonly', true);
+                    }
+                },
+                error: function() {
+                    alert('Error connecting to ViaCEP.');
+                }
+            });
+        });
+    }
+    $(document).ready(customer_zip_code_field);
+</script>
+{% endblock %}

@@ -1,0 +1,27 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <div class="paws">
+        <img src="{% static 'mutts_paws.gif' %}" alt="mutts_logo" width="300">
+    </div>
+    <p>Redirecionando para o Mercado Pago...</p>
+
+    <form id="redirectForm" action="{% url 'checkouts:process_payment' %}" method="POST">
+        {% csrf_token %}
+        {% for key, value in form_data.items %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endfor %}
+    </form>
+
+    <script>
+        document.getElementById("redirectForm").submit();
+    </script>
+</body>
+</html>

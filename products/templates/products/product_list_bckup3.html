@@ -1,0 +1,59 @@
+    {% extends 'base_layout_ops_product.html' %}
+    {% load static %}
+    
+    {% block content %}
+    
+    <link rel="stylesheet" href="{% static 'products/mutts_styles_product_list.css' %}">
+
+    <div class="cabec">
+        <div class="add_product">
+            <a href="{% url 'products:product_create' %}" class="add_prod"><img src="{% static 'plus_icon.png' %}" width="50" alt="addproduct"></a>
+        </div>
+        <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="logout-button"><img src="{% static 'logout_icon.png' %}" width="55"></button>
+        </form>
+       
+     </div>  
+    
+     
+    
+    <div class="scrollable-products">
+        <div class="product_list">
+            {% for product in products %}
+            <div class="product_item">  <!-- NEW: Wrapper for each product -->
+                <div class="product_image">
+                  {% if product.product_image_url %}
+                    <img src="{{ product.product_image_url.url }}" alt="product_image">
+                  {% else %}
+                    No image available
+                  {% endif %}
+                </div>
+                <div class="product_code">
+                    <p>{{ product.product_code }}</p>
+                </div>  
+                <div class="desc">
+                    <p>{{ product.product_short_description }}</p>
+                </div>  
+                <div class="product_edit">
+                    <a href="{% url 'products:product_edit' product_code=product.product_code %}">
+                        <img src="{% static 'edit_icon.png' %}" alt="edit">
+                    </a>
+                </div>
+                <div class="product_delete">
+                    <a href="{% url 'products:product_delete' product_code=product.product_code %}">
+                        <img src="{% static 'delete_icon.png' %}" alt="delete">
+                    </a>
+                </div>
+            </div>  <!-- END product_item -->
+            {% endfor %}
+        </div>
+    </div>
+
+      
+    
+
+    {% endblock %} 
+    
+    
+    

@@ -1,0 +1,44 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'customers/mutts_styles_customer_address_delete.css' %}">
+</head>
+<div class="delete-customer">
+    <form class="site-form" action="{% url 'customers:customer_delete_address' address_id=address.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="wrapper">
+            <div class="delete-customer">    
+                <div class="street">
+                    <p>Rua, Av., etc.:</p>
+                    <input type="text" name="customer_street" value="{{ address.customer_street }}" readonly>
+                </div>
+                <div class="house">
+                    <p>Número:</p>
+                    <input type="text" name="customer_house_number" value="{{ address.customer_house_number }}" readonly>
+                </div>
+                <div class="complement">
+                    <p>Complemento:</p>
+                    <input type="text" name="customer_complement" value="{{ address.customer_complement }}" readonly>
+                </div>      
+                <div class="CEP">
+                    <p>CEP:</p>
+                    <input type="text" name="customer_zip_code" value="{{ address.customer_zip_code }}" readonly>
+                </div>      
+
+            </div>
+            <div class="label_confirmation">
+                <h6>O endereço será <strong>DELETADO</strong>, CONFIRMA?</h6>
+            </div>
+            <div class="form3">
+            <button type="submit">Sim, confirmo</button>
+            </div>
+        </div>    
+        
+
+
+    </form>
+</div>
+{% endblock %}

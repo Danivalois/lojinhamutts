@@ -1,0 +1,55 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'customers/mutts_styles_customer_list.css' %}">
+
+
+
+
+<div class="address_list">
+  <a href="{% url 'customers:customer_list_address' %}">
+    <img src="{% static 'address_icon.png' %}" alt="address_book">
+  </a>
+</div>
+<div class="overallwrapper">
+
+
+<div class="wrapper">
+    {% for customer in customers %}
+      <div class="customer_block">
+  
+        <!-- Row 1: Name + CPF -->
+        <div class="customer_1">{{ customer.customer_name }}</div>
+        <div class="customer_2"><p>{{ customer.customer_cpf }}</p></div>
+  
+        <!-- Row 1: Trash bin (will span rows) -->
+        <div class="customer_delete">
+          <a href="{% url 'customers:customer_delete' customer_cpf=customer.customer_cpf %}">
+            <img src="{% static 'delete_icon.png' %}" alt="delete">
+          </a>
+        </div>
+  
+        <!-- Row 2+: One line per address -->
+        {% for address in customer.addresses.all %}
+          <div class="address_1">{{ address.customer_street }}</div>
+          <div class="address_2" >{{ address.customer_house_number }}</div>
+          <div class="address_3" >{{ address.customer_complement }}</div>
+        {% empty %}
+          <div class="address_4">Endereço não disponível</div>
+        {% endfor %}
+  
+      </div>
+    {% endfor %}
+ 
+  
+  
+
+
+
+    <div class="final">
+        <p> </p>    
+    <div>
+
+</div>
+</div>
+{% endblock %}

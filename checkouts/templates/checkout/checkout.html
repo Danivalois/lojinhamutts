@@ -1,0 +1,223 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content %}
+
+
+{% load l10n %}
+
+
+
+
+
+    <head>
+        <link rel="stylesheet" href="{% static 'mutts_styles_checkout.css' %}">
+    </head>
+
+    <form method="POST" action="{% url 'checkouts:validate_cpf' %}" readonly>
+        {% csrf_token %}
+
+           
+
+        <input type= "hidden" name="product_unit_price" value="{{ form.product_unit_price.value }}">
+        <input type="hidden" name="customer_street" value="{{ form.customer_street.value }}">
+        <input type="hidden" name="customer_neighborhood" value="{{ form.customer_neighborhood.value }}">
+        <input type="hidden" name="customer_city" value="{{ form.customer_city.value }}">
+        <input type= "hidden" name="customer_state" value="{{ form.customer_state.value }}">
+        <input type="hidden" name="customer_zip_code" value="{{ form.customer_zip_code.value }}">
+        <input type="hidden" name="price_sedex" value="{{ form.price_sedex.value }}">
+        <input type="hidden" name="leadtime_sedex" value="{{ form.leadtime_sedex.value}}">
+
+        <input type="hidden" name="price_pac" value="{{ form.price_pac.value }}">
+        <input type="hidden" name="leadtime_pac" value="{{ form.leadtime_pac.value}}">
+  
+        <input type="hidden" name="price_pacmini" value="{{ form.price_pacmini.value }}">
+        <input type="hidden" name="leadtime_pacmini" value="{{ form.leadtime_pacmini.value}}">
+
+        <input type="hidden" name="price_jadlog_exp" value="{{ form.price_jadlog_exp.value }}">
+        <input type="hidden" name="leadtime_jadlog_exp" value="{{ form.leadtime_jadlog_exp.value}}">
+        <input type="hidden" name="total_jadlog_exp" value="{{ form.total_jadlog_exp.value }}">
+        <input type="hidden" name="total_pacmini" value="{{ form.total_pacmini.value }}">   
+        <input type="hidden" name="total_pac" value="{{ form.total_pac.value }}"> 
+        <input type="hidden" name="total_sedex" value="{{ form.total_sedex.value }}">
+
+
+
+
+
+    <div class="grade_product">
+        <div class="product_image">
+            {% if form.product_image_url.value %}
+                <img src="{{ form.product_image_url.value }}" alt="Product Image" width="300">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>    
+        <div class="desc_up">
+          <p>Descrição:</p>
+          <input type="text" name="product_short_description" value="{{ form.product_short_description.value }}" readonly>
+          <p>Preço Unitário (R$):</p>
+          <input type="text" name="product_unit_price" value="{{ form.product_unit_price.value }}" readonly>
+          <p>Quantitade:</p>
+          <input type="text" name="order_quantity" value="{{ form.order_quantity.value }}" readonly>
+          <div class="product_code">
+          <p><label for="product_code">Cód.produto:</label></p>
+          <input type="text" name="product_code" value="{{ form.product_code.value }}" readonly>
+          </div>
+        </div>
+    </div>
+
+        <h6>IDENTIFICAÇÃO</h6>
+    <div class="form">
+        <label for="customer_name">Nome Completo:</label>
+        <input type="text" name="customer_name" value="{% if form.customer_name.value and form.customer_name.value != 'None' %}{{ form.customer_name.value }}{% else %}{% endif %}"><br>
+        <label for="customer_cpf">CPF:</label>
+        <input type="text" name="customer_cpf" value="{% if form.customer_cpf.value and form.customer_cpf.value != 'None' %}{{ form.customer_cpf.value }}{% else %}{% endif %}"><br>
+        <label for="customer_phone">Telefone:</label>
+        <input type="text" name="customer_phone" value="{% if form.customer_phone.value and form.customer_phone.value != 'None' %}{{ form.customer_phone.value }}{% else %}{% endif %}"><br>
+        <label for="customer_email" readonly>E-mail:</label>
+        <input type="email" name="customer_email" value="{% if form.customer_email.value and form.customer_email.value != 'None' %}{{ form.customer_email.value }}{% else %}{% endif %}"><br>
+        <label for="customer_zip_code">CEP:</label>
+        <div class="somenteleitura">
+            <p>{{ form.customer_zip_code.value }}</p>
+        </div>
+        <label for="customer_street">Rua/Av/Praça:</label>
+        <div class="somenteleitura">       
+            <p>{{ form.customer_street.value }}</p>
+        </div>
+        <label for="customer_house_number">Número:</label>
+        <input type="text" name="customer_house_number" value="{% if form.customer_house_number.value and form.customer_house_number.value != 'None' %}{{ form.customer_house_number.value }}{% else %}{% endif %}"><br>
+        <label for="customer_complement">Complemento:</label>
+        <input type="text" name="customer_complement" value="{% if form.customer_complement.value and form.customer_complement.value != 'None' %}{{ form.customer_complement.value }}{% else %}{% endif %}"><br>
+        <label for="customer_neighborhood">Bairro:</label>
+        <div class="somenteleitura">        
+            <p>{{ form.customer_neighborhood.value }}</p>
+        </div>    
+        <label for="customer_city">Cidade:</label>
+        <div class="somenteleitura">        
+            <p>{{ form.customer_city.value }}</p>
+        </div>    
+        <label for="customer_state">UF:</label>
+        <div class="somenteleitura">        
+            <p>{{ form.customer_state.value }}</p>
+        </div>    
+    </div>    
+   
+
+    <h6>FRETE</h6>
+    
+    
+    
+    
+    
+    
+    <div class="flex_container">
+        <div class="freight_container_1">
+            {% if form.price_pacmini.value != "0.00" and form.price_pacmini.value != "Unavailable" %}
+            <label class="freight_option">
+                <input type="radio" name="selected_freight" value="pacmini" required>
+                <div class="freight_table_1">
+                    <img src="{% static 'pacmini_256.png' %}" alt="pacmini_fforwarder" width="350"><br>
+                    <label>Frete (R$):</label><br>
+                    <p>{{ form.price_pacmini.value|floatformat:2 }}</p>
+                    <label>Prazo (dia):</label>
+                    <p>{{ form.leadtime_pacmini.value|floatformat:0 }}</p>
+                    <label>Valor Total Pedido (R$):</label>
+                    <div class="tot_val">
+                        <p>{{ form.total_pacmini.value|floatformat:2 }}</p>
+                    </div>    
+                </div>
+            </label>
+
+            {% endif %}
+    
+            {% if form.price_pac.value != "0.00" and form.price_pac.value != "Unavailable" %}
+            <label class="freight_option">
+                <input type="radio" name="selected_freight" value="pac" required>
+                <div class="freight_table_2">
+                    <img src="{% static 'pac_256.png' %}" alt="pac_fforwarder" width="350"><br>
+                    <label>Frete (R$):</label><br>
+                    <p>{{ form.price_pac.value|floatformat:2  }}</p>
+                    <label>Prazo (dia):</label>
+                    <p>{{ form.leadtime_pac.value|floatformat:0 }}</p>
+                    <label>Valor Total Pedido (R$):</label>
+                    <div class="tot_val">
+                      <p>{{ form.total_pac.value|floatformat:2  }}</p>
+                    </div>
+                </div>
+            </label>
+
+            {% endif %}
+        </div>
+    
+        <div class="freight_container_2">
+            {% if form.price_jadlog_exp.value != "0.00" and form.price_jadlog_exp.value != "Unavailable" %}
+            <label class="freight_option">
+                <input type="radio" name="selected_freight" value="jadlog" required>
+                <div class="freight_table_3">
+                    <img src="{% static 'jadlog_256.png' %}" alt="jadlog_fforwarder" width="350"><br>
+                    <label>Frete (R$):</label><br>
+                    <p>{{ form.price_jadlog_exp.value|floatformat:2 }}</p>
+                    <label>Prazo (dia):</label>
+                    <p>{{ form.leadtime_jadlog_exp.value|floatformat:0 }}</p>
+                    <label>Valor Total Pedido (R$):</label>
+                    <div class="tot_val">
+                        <p>{{ form.total_jadlog_exp.value|floatformat:2 }}</p>
+                    </div>    
+                </div>
+            </label>
+            {% endif %}
+    
+            {% if form.price_sedex.value != "0.00" and form.price_sedex.value != "Unavailable" %}
+            <label class="freight_option">
+                <input type="radio" name="selected_freight" value="sedex" required>
+                <div class="freight_table_4">
+                    <img src="{% static 'sedex_256.png' %}" alt="sedex_fforwarder" width="350"><br>
+                    <label>Frete (R$):</label><br>
+                    <p>{{ form.price_sedex.value|floatformat:2 }}</p>
+                    <label>Prazo (dia):</label>
+                    <p>{{ form.leadtime_sedex.value|floatformat:0 }}</p>
+                    <label>Valor Total Pedido (R$):</label>
+                    <div class="tot_val">
+                        <p>{{ form.total_sedex.value|floatformat:2  }}</p>
+                    </div>
+                </div>
+            </label>
+
+            {% endif %}
+        </div>
+    </div>
+    
+
+    
+
+
+    <div class="final_div">
+        <div class="terms_use">
+            <label for="terms-checkbox">
+            Concordo com os <a href="{% url 'checkouts:terms_use' %}?return_url={% url 'checkouts:checkout' %}?productCode={{ form.product_code.value }}">
+                Termos de Uso
+            </a>
+            </label>  
+        </div>
+        <div class="checar">    
+            <input type="checkbox" id="terms-checkbox" name="terms_accepted">
+        </div>
+        <div class="logo_mp">
+            <img src="{% static 'mercado-pago.svg' %}" alt="POS" width="300">
+        </div>
+    </div>
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="form3">
+    <button type="submit">Ir para Pagamento</button>
+    </div>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,152 @@
+.scrollable-customers {
+    margin-top: 80px;
+    overflow-y: scroll; /*Make only the customer section scrool */
+    max-height: 325px; /* Set the maximum height for the scrollable area */
+ }
+
+/* Product List Specific Styles */
+.customer_list_head {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 90%;
+    z-index: 100;           /* Ensure it's on top */
+    width: 90%;
+    display: block;
+    justify-content: space-between; /* Distribute space between items */
+    align-items: center; /* Vertically center items */
+    padding: 0 10px;
+    position: relative; 
+    z-index: 1; 
+
+}
+
+.formulario {
+    margin-top: 300px;
+}
+
+.customer_list_head h1 {
+    margin-top: 0px;
+    flex-grow: 1; /* Allow the title to take up available space */
+    text-align: center; /* Center the text within the h1 element */
+    font-family: Arial;
+    font-size: 40px;
+    color: #0e0080;
+    text-shadow: 2px 2px #828282;
+    padding: 15px;
+    position: relative; 
+    z-index: 1; 
+
+}
+
+
+
+.add_prod {
+
+    font-family: Arial;
+    background: none;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 0 20px 0 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 300;
+    display: block;
+    justify-self: right;
+    position: relative; 
+    z-index: 100; 
+}
+
+
+
+
+
+
+:root {
+    --cod-width: 100px;
+}
+
+.customer2 {
+    position: fixed;
+    top: 200px;
+    left: 0;
+    width: 100%;
+    z-index: 100;           /* Ensure it's on top */
+
+    display: grid;
+    grid-template-columns: var(--cod-width) 1fr;
+    grid-gap: 10px;
+    padding: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.cabeca1, .cabeca2 {
+    flex: 1; /* Distribute available space equally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 1px 1px #828282;
+    font-family: Arial;
+    font-size: 18px;
+    color: #0e0080;
+    text-align: center;
+    border: 4px solid #0e0080;
+    border-radius: 10px;
+    background-color: #d3d3d3;
+    padding: 5px;
+    margin: 0 5px; /* Add some horizontal margin */
+    width: 85%;
+}
+
+/* Product List Items */
+.customers {
+    border:none/* Styles for the overall customer list */
+}
+
+.customer {
+        display: flex;
+        grid-template-columns: 50px 20px 20px 10px;
+        grid-gap: 2px;
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+        align-items: center;
+    
+}
+
+
+
+.customer:last-child {
+    border-bottom: none; /* Remove the bottom border from the last item */
+}
+
+.cod, .desc {
+    font-family: Arial;
+    font-size: 10px;
+    color: #0e0080;
+    text-align: left;
+    margin: 0;
+    padding: 5px;
+}
+
+
+
+/* Edit and Delete Links */
+.edreg, .killreg {
+    font-family: Arial;
+    font-size: 12px;
+    color: #0e0080;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 5px;
+    text-align: center;
+}

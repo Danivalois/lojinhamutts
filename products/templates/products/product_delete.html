@@ -1,0 +1,36 @@
+{% extends 'base_layout_ops_product.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'products/mutts_styles_product_delete.css' %}">
+</head>
+
+       
+    <form class="site-form" action="{% url 'products:product_delete' product.product_code %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="wrapper">
+        <div class="delete-product">    
+            <div class="code">
+                <p>Código do Produto:</p>
+                <input type="text" name="product_code" value="{{ product.product_code }}" readonly>
+            </div>
+            <div class="desc">
+                <p>Descrição do Produto:</p>
+                <input type="text" name="product_short_description" value="{{ product.product_short_description }}" readonly>
+            </div>
+        </div>
+        <p> </p>
+        <p> </p>
+        <div class="label_confirmation">
+        <p>Produto será <strong>DELETADO</strong>, CONFIRMA?</p>
+        </div>
+        <div class="form3">
+        <button type="submit">Sim, confirmo</button>
+        </div>
+    </div>    
+    </form>
+
+
+{% endblock %}

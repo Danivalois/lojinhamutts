@@ -1,0 +1,50 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'mutts_styles_pckout.css' %}">
+</head>
+    <form method="POST" action="{% url 'checkouts:checkout' %}">
+    {% csrf_token %}
+    <input type="hidden" name="product_code" value="{{ form.product_code.value }}" readonly>
+    <div class="grade_product">
+        <div class="product_image">
+            {% if form.product_image_url.value %}
+            <img src="{{ form.product_image_url.value }}" alt="Product Image" width="600">
+            {% else %}
+            <p>No image available</p>
+            {% endif %}
+        </div>
+    
+        <div class="desc_up">
+          <p>Descrição:</p>
+          <input type="text" name="product_short_description" id="id_product_short_description" value="{{ form.product_short_description.value|default:'' }}" readonly>
+          <p> </p><br>
+          <p>Preço Unitário (R$)</p>
+          <input type="text" name="product_unit_price" id="id_product_unit_price" value="{{ form.product_unit_price.value|default:'' }}" readonly>
+        </div>
+    </div>
+  <section id="contact">
+    <div class="form">
+      <p>CEP:</p>
+      <input type="text" name="customer_zip_code" placeholder="CEP" id="id_customer_zip_code" value="{{ form.customer_zip_code.value|default:'' }}"><br>
+    </div>
+    <div class="form2">  
+      <p>Quantidade:</p>
+      <input type="number" name="order_quantity" placeholder="Qtd." min="1" id="id_order_quantity" value="{{ form.order_quantity.value|default:'1' }}"><br>
+    </div>
+    <div class="alert-danger">
+      {% for message in messages %}
+          <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+
+
+    <div class="form3">
+      <button class="button" type="submit">Opções de Frete</button>
+    </div>
+  </section>
+
+
+  {% endblock %}

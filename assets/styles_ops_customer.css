@@ -1,0 +1,132 @@
+
+
+/* reset */
+html, body, p, a, ul, li {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+:root {
+  --primary: #f2f2f2;
+  --secondary: #0A0B5B;
+}
+
+html {
+  font-size: 30px; /* You might want to use a relative unit like rem here */
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-image: url("background_mutts.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  
+}
+
+
+
+
+.icons {
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+  grid-auto-rows: minmax(20px, auto);
+  justify-items: center;
+  align-items: center;
+  width: 100%;  /* Adjust based on your icon sizes */
+  background: var(--secondary);
+  max-width: 100%;
+  padding: 10px 0px 10px 0px;
+  
+ 
+}
+
+.customer{
+  display: grid;
+  grid-template-columns: 10% 90%; 
+  width: 100%;  /* Adjust based on your icon sizes */
+  justify-items: center;
+  align-items: center;
+  background: var(--secondary);
+  max-width: 100%;
+  list-style: none;
+  grid-gap: 0px;
+}
+
+.product{
+  display: grid;
+  grid-template-columns: 10% 90%; 
+  width: 100%;  /* Adjust based on your icon sizes */
+  justify-items: center;
+  align-items: center;
+  background: var(--secondary);
+  max-width: 100%;
+  list-style: none;
+  grid-gap: 0px;
+}
+
+.orders{
+  display: grid;
+  grid-template-columns: 10% 90%; 
+  width: 100%;  /* Adjust based on your icon sizes */
+  justify-items: center;
+  justify-content: center; /* centers items horizontally */
+  align-items: center; /* centers items vertically */
+  background: var(--secondary);
+  max-width: 100%;
+  list-style: none;
+  grid-gap: 0px;
+
+}
+
+.icon_img img{
+  height: auto;
+  width: 40%;
+  margin: 0px 0px 0px 0px;
+  display: block;
+  
+  
+}
+
+
+.dot img{
+  display: block;
+  width: 8px;
+  margin: 0px 3px 0px 0px;
+}
+
+form button{
+  display: block;
+  background: none;
+  border: none;
+}
+
+.logout {
+  width: 100%;
+  z-index: 1; /* ensures it's above the banner */
+
+}
+
+.logout img{
+  display: block;
+  justify-self: center;
+  width: 53%;
+}
+
+.add_product{
+  margin:0px;
+}
+
+.add_product img{
+  padding: 0px 0px 0px 20px;
+  display: block;
+  justify-self: center;
+  width: 30%;
+ }

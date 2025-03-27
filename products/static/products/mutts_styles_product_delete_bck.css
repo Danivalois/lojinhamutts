@@ -1,0 +1,243 @@
+@font-face {
+    font-family: 'Signika Local';
+    src: url('/static/fonts/Signika-Regular.woff2') format('woff2'),
+         url('/static/fonts/Signika-Regular.ttf') format('truetype'),
+         url('/static/fonts/Signika-Bold.ttf') format('truetype'),
+         url('/static/fonts/Signika-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+  font-family: 'Signika';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/signika/v25/vEFO2_JTCgwQ5ejvMV0Ox_Kg1UwJ0tKfX6bBjM4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  
+  
+  /* reset */
+  html, body,p,a,ul,li{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  width: 100%;
+  }
+  
+  
+  html {
+    font-size: 30px;
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  
+  :root{
+    --primary: #f2f2f2;
+    --secondary: #0e0080;
+    --shadow: #8B8B8B;
+    --placeholder: #dddddd;
+  }
+  
+  
+
+  .cabec{
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: wrap; /* Or use flex-wrap */
+    align-items: center;
+  }
+
+  /*  os codigos abaixo foram para eliminar um ponto azul claro */
+.logout-button:focus,
+.logout-button img:focus,
+.logout-link:focus {
+    outline: none !important;
+}
+.logout-button {
+    position: static !important; /* Remove fixed positioning */
+    width: auto !important;
+    background: none !important; /* Remove any potential background color */
+    border: none !important; /* Ensure there's no border */
+}
+
+/* fim do blue light dot */
+
+  .logout-button{
+    width: 12%;
+  }
+  .logout-button img{
+   position: fixed;
+    
+   padding: 10px 0px 10px 38px;
+  
+  }
+  
+  .add_product{
+    width: 88%;
+  }
+  .add_product img{
+    position: fixed;
+    margin: 20px 0px 0px 38px;  
+  }
+  
+  
+
+
+  
+  .delete-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+
+    gap: 10px; 
+    width: 100%;
+    margin-top: 150px; /* ONLY keep the top margin */
+  }
+
+  
+
+  
+
+  .code input,
+  .desc input {
+      font-family: 'Signika Local', 'Signika', sans-serif; 
+      background: none;
+      text-shadow: 4px 4px 6px var(--shadow);
+      padding: 0px 0px 0px 40px;
+      border-radius: 0px; 
+      border: none;
+      color: var(--secondary);
+      font-size: 3.1em;
+      text-align: left; /* Center text */
+      width: 100%; /* Use full width */
+      max-width: 90%; /* Prevent overflow */
+      margin: 0 auto; /* Center horizontally */
+      display: block;
+  }
+  
+
+  
+
+  .code p {
+    display: block;
+    text-align: left; 
+    font-family: 'Signika Local', 'Signika', sans-serif; 
+    background: none;
+    padding: 0px 0px 0px 40px;
+    border-radius: 0px; 
+    overflow: hidden; 
+    border: none;
+    color: var(--secondary);
+    font-size: 1em;
+
+  
+  }
+
+  
+  .desc p {
+    display: block;
+    text-align: left; 
+    font-family: 'Signika Local', 'Signika', sans-serif; 
+    background: none;
+    padding: 0px 0px 0px 40px;
+    border-radius: 0px; 
+    overflow: hidden; 
+    border: none;
+    color: var(--secondary);
+    font-size: 1em;
+  
+  }
+
+
+
+
+  .label_confirmation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; /* Make sure it takes full width */
+    max-width: 100%;
+    text-align: center;
+    padding: 100px 0px 100px 0px; /* Add some padding */
+}
+
+.label_confirmation p {
+    font-family: 'Signika Local', 'Signika', sans-serif; 
+    text-shadow: 4px 4px 6px var(--shadow);
+    color: red;
+    font-size: 2.2em;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto; /* Remove left margin and center properly */
+}
+
+
+  .form3 button {
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    display:block;
+    margin: auto;
+    background: var(--secondary);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 3px var(--secondary);
+    font-size: 2em;
+    width: 40%; 
+    
+    }
+    
+    .button:hover{
+    color: var(--secondary);
+    background: var(--primary);
+    }
+    
+    .form3{
+      width: 100%;
+      margin: 30px 0px 40px 0px;
+    }
+    
+    
+
+    
+.footer_list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.product_indicator img{
+  position: fixed;
+  padding: 382px 0px 0px 0px;
+ width: 25px;
+}
+.product_indicator {
+  
+ padding: 0px 0px 0px 0px;
+ z-index: 100;
+ 
+}
+.indicator_1 .indicator_2 {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ overflow-y: scroll;
+ max-height: 1200px;
+ padding: 1px 0px 0px 0px;
+
+}
+
+
+
+

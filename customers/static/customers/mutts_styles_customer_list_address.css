@@ -1,0 +1,245 @@
+@font-face {
+    font-family: 'Signika Local';
+    src: url('/static/fonts/Signika-Regular.woff2') format('woff2'),
+         url('/static/fonts/Signika-Regular.ttf') format('truetype'),
+         url('/static/fonts/Signika-Bold.ttf') format('truetype'),
+         url('/static/fonts/Signika-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+  font-family: 'Signika';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/signika/v25/vEFO2_JTCgwQ5ejvMV0Ox_Kg1UwJ0tKfX6bBjM4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  
+  
+  /* reset */
+  html, body,p,a,ul,li{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  }
+  
+  
+  
+  
+  :root{
+    --primary: #f2f2f2;
+    --secondary: #0e0080;
+    --shadow: #8B8B8B;
+    --placeholder: #dddddd;
+    --cod-width: 300px;
+  }
+  
+  
+  html {
+    font-size: 30px;
+    height: 100%; 
+    margin-top: 0px;
+    padding: 0;
+  }
+  
+ 
+  
+  .overallwrapper{
+    display: grid;
+    grid-template-columns: 100%;
+    margin: 60px 0px 0px 0px;
+  }
+  
+  .wrapper {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    
+   
+
+  }
+
+
+
+  
+  /* One customer block = one grid */
+  .customer_block {
+    display: grid;
+    grid-template-columns: 60% 17% 17% 6%;
+    grid-auto-rows: auto;
+    gap: 0px;
+    padding: 0px;
+    margin: 0px 10px 0px 10px;
+    border-bottom: 1px solid rgb(126, 126, 126);
+    background-color: none;
+    
+  }
+  
+  
+  .address_1 {
+    grid-column: 1;
+    grid-row: 1;
+    font-weight: bold;
+    align-self: center;
+    justify-self: start;
+    margin: 0px 0px 0px 0px;
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    font-size: 0.6em;
+    color: var(--secondary) !important;
+    text-shadow: 4px 4px 6px var(--shadow);
+  }
+  .address_2 {
+    grid-column: 2;
+    grid-row: 1;
+
+  }
+  .address_3 {
+    grid-column: 3;
+    grid-row: 1;
+
+  }
+  .address_4 {
+    grid-column: 1;
+    grid-row: 2;
+
+  }
+  .address_5 {
+    grid-column: 2;
+    grid-row: 2;
+
+  }  
+  .address_6 {
+    grid-column: 3;
+    grid-row: 2;
+ 
+  }    
+
+  
+  .customer_edit {
+    grid-column: 4;
+    grid-row: 1; /* spans from first to last row */
+
+  }
+  .customer_edit img {
+    width: 60%;
+  }
+
+  .customer_delete {
+    grid-column: 4;
+    grid-row: 2; /* spans from first to last row */
+  }
+  .customer_delete img {
+    width: 60%;
+  }
+  
+.customer_1{
+  grid-column: 1;
+  grid-row: 3; /* spans from first to last row */
+ 
+}
+.customer_2{
+  grid-column: 2 / span 4;
+  grid-row: 3; /* spans from first to last row */
+}
+
+.customer_3{
+  grid-column: 1 / span 3;
+  color: var(--shadow);
+  font-style: italic;
+  align-self: center;
+  font-family: 'Signika Local', 'Signika', sans-serif;
+  font-size: 0.3em;
+}
+
+.address_2,
+.address_3,
+.address_4,
+.address_5,
+.address_6,
+.customer_1,
+.customer_2{
+max-width: 100%;
+white-space: nowrap;           
+overflow: hidden;            
+text-overflow: ellipsis;  
+align-self: center;
+justify-self: start;
+font-family: 'Signika Local', 'Signika', sans-serif;
+font-size: 0.4em;
+color: var(--secondary) !important;
+text-shadow: 4px 4px 6px var(--shadow);
+}
+
+
+
+
+
+
+
+
+  
+  .address {
+    grid-column: 1;
+  }
+  .address {
+    grid-column: 2;
+    max-width: 20%;
+    white-space: nowrap;           /* Prevent line break */
+    overflow: hidden;              /* Hide anything that overflows */
+    text-overflow: ellipsis;  
+    align-self: center;
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    font-size: 0.4em;
+    color: var(--secondary) !important;
+    text-shadow: 4px 4px 6px var(--shadow);
+  }
+  .address {
+    grid-column: 3;
+    max-width: 20%;
+    white-space: nowrap;           /* Prevent line break */
+    overflow: hidden;              /* Hide anything that overflows */
+    text-overflow: ellipsis;  
+    align-self: center;
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    font-size: 0.4em;
+    color: var(--secondary) !important;
+    text-shadow: 4px 4px 6px var(--shadow);
+  }
+  
+  .address {
+    grid-column: 1 / span 3;
+    color: var(--shadow);
+    font-style: italic;
+    align-self: center;
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    font-size: 0.5em;
+    
+  }
+  
+   
+  .customer
+  {
+    align-self: center;
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    font-size: 0.4em;
+    color: red;
+  }
+  .customer, 
+  .address 
+  {
+   align-self: center;
+   font-family: 'Signika Local', 'Signika', sans-serif;
+   font-size: 0.6em;
+   color: var(--secondary) !important;
+   text-shadow: 4px 4px 6px var(--shadow);
+ }
+
+
+  
+  
+  .final{
+    padding: 0px 0px 100px 0px;
+  }
+  
