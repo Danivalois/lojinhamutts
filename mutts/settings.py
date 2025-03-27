@@ -23,7 +23,7 @@ DEBUG = "True"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback_key_for_debug")
 
-ALLOWED_HOSTS = ["*"]  # Or restrict to vercel domain
+ALLOWED_HOSTS = ["lojinhamutts.vercel.app"]
 
 DATABASES = {
     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
