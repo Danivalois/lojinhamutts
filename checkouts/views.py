@@ -16,7 +16,14 @@ from dotenv import load_dotenv
 from django.http import HttpResponseRedirect, HttpResponse
 from .services import send_order_emails
 import locale
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+try:
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+except locale.Error:
+    # fallback for environments like Vercel that don't have this locale
+    locale.setlocale(locale.LC_ALL, '')
+
+
+
 MERCADOPAGO_ACCESS_TOKEN = os.getenv("MERCADOPAGO_ACCESS_TOKEN")  # Store in .env file
 
 

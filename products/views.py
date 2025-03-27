@@ -4,7 +4,13 @@ from django.contrib.auth.decorators import login_required
 from . import forms
 from .forms import EditProductForm  # Import the new form
 import locale
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
+try:
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+except locale.Error:
+    # fallback for environments like Vercel that don't have this locale
+    locale.setlocale(locale.LC_ALL, '')
+
 
 @login_required(login_url="/accounts/login/")
 def product_list(request):
