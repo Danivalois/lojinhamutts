@@ -23,7 +23,10 @@ DEBUG = "True"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback_key_for_debug")
 
-ALLOWED_HOSTS = ["lojinhamutts2025.vercel.app", "lojinhamutts2025-git-main-dani-valois-projects.vercel.app"]
+ALLOWED_HOSTS = ["lojinhamutts2025.vercel.app", 
+                 "lojinhamutts2025-git-main-dani-valois-projects.vercel.app",
+                 "jnjdcpgdoxesjnvmdjjk.supabase.co"
+                 ]
 
 DATABASES = {
     'default': dj_database_url.config(
