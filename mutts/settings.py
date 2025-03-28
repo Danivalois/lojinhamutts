@@ -161,8 +161,14 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'C:/Users/apln2/Dropbox/Mutts_Website/staticfiles')
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'mutts.supabase_storage_backend.SupabaseStorage'
+
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
+SUPABASE_BUCKET = os.getenv('SUPABASE_BUCKET', 'product-images')
+SUPABASE_PATH_PREFIX = 'products/'  # Or whatever folder inside bucket
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/"
+
 
 
 # Default primary key field type
