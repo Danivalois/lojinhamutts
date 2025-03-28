@@ -1,8 +1,11 @@
 import os
 import mimetypes
 from django.core.files.storage import Storage
-from supabase import create_client
 from django.core.files.base import ContentFile
+from supabase import create_client
+import logging
+
+logger = logging.getLogger(__name__)
 
 class SupabaseStorage(Storage):
     def __init__(self):
@@ -23,18 +26,19 @@ class SupabaseStorage(Storage):
         path = self._get_path(name)
         content_type = mimetypes.guess_type(name)[0] or "application/octet-stream"
         
-        # Read content into memory (required for Supabase upload)
+        # Read the content into memory as bytes
         content.open()
         file_data = content.read()
 
-        self.client.storage.from_(self.supabase_bucket).upload(
+        # Upload to Supabase
+        logger.info(f"Uploading {path} to bucket {self.supabase_bucket}")
+        res = self.client.storage.from_(self.supabase_bucket).upload(
             path,
             file_data,
-            {
-                "content-type": content_type,
-                "upsert": True,
-            }
+            {"content-type": content_type, "upsert": True}
         )
+
+        logger.info(f"Upload result: {res}")
         return name
 
     def exists(self, name):
