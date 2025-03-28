@@ -14,11 +14,24 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
-load_dotenv()  # Loads .env into os.environ
+load_dotenv() 
 
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}
 
-#DEBUG = os.getenv("DEBUG", "False") == "True"
+
 DEBUG = "True"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback_key_for_debug")

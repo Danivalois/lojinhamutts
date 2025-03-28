@@ -22,30 +22,33 @@ class SupabaseStorage(Storage):
         response = self.client.storage.from_(self.supabase_bucket).download(self._get_path(name))
         return ContentFile(response)
 
+ 
     def _save(self, name, content):
         path = self._get_path(name)
         content_type = mimetypes.guess_type(name)[0] or "application/octet-stream"
-        
-        # Read the content into memory as bytes
-        content.open()
+
+        if hasattr(content, 'open'):
+            content.open()
         file_data = content.read()
 
-        # Upload to Supabase
-        logger.info(f"Uploading {path} to bucket {self.supabase_bucket}")
-        res = self.client.storage.from_(self.supabase_bucket).upload(
+        self.client.storage.from_(self.supabase_bucket).upload(
             path,
             file_data,
-            {"content-type": content_type, "upsert": True}
+            file_options={
+                "content-type": content_type,
+                "x-upsert": "true"
+            }
         )
-
-        logger.info(f"Upload result: {res}")
         return name
+
+
+
 
     def exists(self, name):
         try:
             self.client.storage.from_(self.supabase_bucket).get_public_url(self._get_path(name))
             return True
-        except:
+        except Exception:
             return False
 
     def url(self, name):
