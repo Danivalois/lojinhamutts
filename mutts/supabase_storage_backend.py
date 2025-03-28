@@ -22,7 +22,19 @@ class SupabaseStorage(Storage):
     def _save(self, name, content):
         path = self._get_path(name)
         content_type = mimetypes.guess_type(name)[0] or "application/octet-stream"
-        self.client.storage.from_(self.supabase_bucket).upload(path, content, {"content-type": content_type, "upsert": True})
+        
+        # Read content into memory (required for Supabase upload)
+        content.open()
+        file_data = content.read()
+
+        self.client.storage.from_(self.supabase_bucket).upload(
+            path,
+            file_data,
+            {
+                "content-type": content_type,
+                "upsert": True,
+            }
+        )
         return name
 
     def exists(self, name):
