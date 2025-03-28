@@ -32,6 +32,7 @@ DATABASES = {
 }
 
 
+DEFAULT_FILE_STORAGE = 'mutts.utils.supabase_storage.SupabaseStorage'
 
 
 
