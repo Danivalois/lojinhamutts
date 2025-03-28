@@ -2,6 +2,8 @@ from django.db import models
 import os
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
+from mutts.supabase_storage_backend import SupabaseStorage
+
 
 def validate_jpg(value):
     """Ensure the product image is a .jpg file."""
@@ -30,7 +32,7 @@ class Product(models.Model):
     product_height = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
     product_width = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
     product_length = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
-    product_image_url = models.ImageField(upload_to='products/', default='default.png', blank=True)
+    product_image_url = models.ImageField(upload_to='products/', default='default.png', blank=True,  storage=SupabaseStorage())
     product_created_at = models.DateTimeField(auto_now_add=True)
     product_updated_at = models.DateTimeField(auto_now=True)
     product_is_active = models.BooleanField(default=True)
