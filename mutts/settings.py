@@ -169,7 +169,8 @@ SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 SUPABASE_BUCKET = os.getenv('SUPABASE_BUCKET', 'product-images')
 SUPABASE_PATH_PREFIX = 'products/'  # Or whatever folder inside bucket
-MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/"
+MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{SUPABASE_PATH_PREFIX}"
+
 
 
 
