@@ -25,12 +25,17 @@ def product_detail(request, product_code):
 @login_required(login_url="/accounts/login/")
 def product_create(request):
     if request.method == 'POST':
-        form = forms.CreateProduct(request.POST, request.FILES) # files é a imagem
+        form = forms.ProductForm(request.POST) # files é a imagem
         if form.is_valid():
-           form.save()
-           return redirect('products:product_list')
+            product = form.save(commit=False)
+            # Upload new image if provided
+            uploaded_file = request.FILES.get("image_upload")
+            if uploaded_file:
+                product.product_image_url = upload_to_supabase(uploaded_file)
+            product.save()
+        return redirect('products:product_list')
     else:
-        form = forms.CreateProduct()
+        form = forms.ProductForm()
     return render(request, 'products/product_create.html', { 'form': form })
 
 # @login_required(login_url="/accounts/login/")

@@ -107,6 +107,24 @@ class ProductForm(forms.ModelForm):
                 'product_image_url',
                 'product_is_active',
         ]
+        labels = {
+            'product_code': 'Código do Produto:',
+            'product_short_description': 'Descrição Curta:',
+            'product_description_long': 'Descrição Longa:',
+            'product_category': 'Categoria:',
+            'product_unit_price': 'Preço Unitário',
+            'product_stock': 'Qtd.em Estoque:',
+            'product_thumbnail_url': 'URL Thumbnail:',
+            'product_brand': 'Marca:',
+            'product_sku': 'SKU:',
+            'product_weight': 'Peso (prod. + embalagem em kg):',
+            'product_dimensions': 'Dimensões do Produto (cm):',
+            'product_height': 'Altura da embalagem (cm):',
+            'product_width': 'Largura da embalagem (cm):',
+            'product_length': 'Comprimento do embalagem (cm):',
+            'product_image_url': 'Imagem do Produto:',
+            'product_is_active': 'Produto está ativo? :',
+            }
 
     def save(self, commit=True):
         instance = super().save(commit=False)
