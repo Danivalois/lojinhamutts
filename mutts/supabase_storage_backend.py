@@ -16,7 +16,8 @@ class SupabaseStorage(Storage):
         self.client = create_client(self.supabase_url, self.supabase_key)
 
     def _get_path(self, name):
-        return f"{self.path_prefix}{name}"
+        return os.path.join(self.path_prefix, os.path.basename(name))
+
 
     def _open(self, name, mode='rb'):
         response = self.client.storage.from_(self.supabase_bucket).download(self._get_path(name))
