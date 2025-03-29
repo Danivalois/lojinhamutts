@@ -33,68 +33,79 @@
             {% csrf_token %}
 
             <div class="wrapper">
-                <p>{{ form.product_code.label_tag }}</p>
+                <p><label for="id_product_code">Código do Produto:</label></p>
                 <input type="text" name="product_code" class="all_fields" id="id_product_code" value="{{ form.product_code.value }}" readonly>
 
-                <p>{{ form.product_short_description.label_tag }}</p>
-                <input type="text" name="product_short_description" class="all_fields" value="{{ form.product_short_description.value }}">
+                <p><label for="id_product_short_description">Descrição Curta:</label></p>
+                <input type="text" name="product_short_description" class="all_fields" id="id_product_short_description" value="{{ form.product_short_description.value }}">
 
-                <p>{{ form.product_description_long.label_tag }}</p>
-                <input type="text" name="product_description_long" class="all_fields" value="{{ form.product_description_long.value }}">
+                <p><label for="id_product_description_long">Descrição Longa:</label></p>
+                <input type="text" name="product_description_long" class="all_fields" id="id_product_description_long" value="{{ form.product_description_long.value }}">
 
-                <p>{{ form.product_category.label_tag }}</p>
+                <p><label for="id_product_category">Categoria:</label></p>
                 {{ form.product_category }}
 
                
-                <p>{{ form.product_unit_price.label_tag }}</p>
+                <p><label for="id_product_unit_price">Categoria:</label></p>
                 {% with form.initial.product_unit_price|stringformat:"0.2f" as formatted_price %}
-                <input type="number" step="0.01" name="product_unit_price" value="{{ formatted_price }}">
+                <input type="number" step="0.01" name="product_unit_price" id="id_product_unit_price" value="{{ formatted_price }}">
                 {% endwith %}
               
 
               
 
-                <p>{{ form.product_stock.label_tag }}</p>
-                <input type="text" name="product_stock" class="all_fields" value="{{ form.product_stock.value }}">
+                <p><label for="id_product_stock">Qtd.em Estoque:</label></p>
+                <input type="text" name="product_stock" class="all_fields" id="id_product_stock" value="{{ form.product_stock.value }}">
 
-                <p>{{ form.product_thumbnail_url.label_tag }}</p>
-                <input type="text" name="product_thumbnail_url" class="all_fields" value="{{ form.product_thumbnail_url.value|default:'' }}">
+                <p><label for="id_product_thumbnail_url">URL Thumbnail:</label></p>
+                <input type="text" name="product_thumbnail_url" class="all_fields" id="id_product_thumbnail_url" value="{{ form.product_thumbnail_url.value|default:'' }}">
 
-                <p>{{ form.product_brand.label_tag }}</p>
-                <input type="text" name="product_brand" class="all_fields" value="{{ form.product_brand.value|default:'' }}">
+                <p><label for="id_product_brand">Marca:</label></p>
+                <input type="text" name="product_brand" class="all_fields" id="id_product_brand" value="{{ form.product_brand.value|default:'' }}">
 
-                <p>{{ form.product_sku.label_tag }}</p>
-                <input type="text" name="product_sku" class="all_fields" value="{{ form.product_sku.value|default:'' }}">
 
-                <p>{{ form.product_dimensions.label_tag }}</p>
-                <input type="text" name="product_dimensions" class="all_fields" value="{{ form.product_dimensions.value|default:'' }}">
+                <p><label for="id_product_sku">SKU:</label></p>
+                <input type="text" name="product_sku" class="all_fields" id="id_product_sku" value="{{ form.product_sku.value|default:'' }}">
 
-                <p>{{ form.product_weight.label_tag }}</p>
-                
+
+                <p><label for="id_product_weight">Peso (prod. + embalagem em kg):</label></p>
                 {% with form.initial.product_weight|stringformat:"0.2f" as formatted_price %}
-                <input type="number" step="0.01" name="product_weight" value="{{ formatted_price }}">
+                  <input type="number" step="0.01" name="product_weight" id="id_product_weight" value="{{ formatted_price }}">
                 {% endwith %}
-                <p>{{ form.product_height.label_tag }}</p>
+
+
+                <p><label for="id_product_dimensions">Dimensões do Produto (cm):</label></p>
+                <input type="text" name="product_dimensions" class="all_fields" id="id_product_dimensions" value="{{ form.product_dimensions.value|default:'' }}">
+
+    
+                <p><label for="id_product_height">Altura da embalagem (cm):</label></p>
                 {% with form.initial.product_height|stringformat:"0.2f" as formatted_price %}
-                <input type="number" step="0.01" name="product_height" value="{{ formatted_price }}">
+                <input type="number" step="0.01" name="product_height" id="id_product_height" value="{{ formatted_price }}">
                 {% endwith %}    
                 
-                <p>{{ form.product_width.label_tag }}</p>
+                <p><label for="id_product_width">Largura da embalagem (cm):</label></p>
                 {% with form.initial.product_width|stringformat:"0.2f" as formatted_price %}
-                <input type="number" step="0.01" name="product_width" value="{{ formatted_price }}">
+                <input type="number" step="0.01" name="product_width" id="id_product_width" value="{{ formatted_price }}">
                 {% endwith %}
-                <p>{{ form.product_length.label_tag }}</p>
+
+                <p><label for="id_product_length">Comprimento da embalagem (cm):</label></p>
                 {% with form.initial.product_length|stringformat:"0.2f" as formatted_price %}
-                <input type="number" step="0.01" name="product_length" value="{{ formatted_price }}">
+                <input type="number" step="0.01" name="product_length" id="id_product_length" value="{{ formatted_price }}">
                 {% endwith %}
+
+
+
+                <p><label for="id_product_image_url">Imagem do Produto:</label></p>
                 {% if product.product_image_url %}
-                    <img src="{{ product.product_image_url }}" width="150">
+                    <img src="{{ product.product_image_url }}" width="50">
                 {% endif %}
                 <p>{{ form.product_image_url.label_tag }}</p>
-                <input type="file" name="image_upload" class="all_fields">
+                <input type="file" name="image_upload" id="id_product_image_url" class="all_fields">
 
-                <p>{{ form.product_is_active.label_tag }}</p>
-                <input type="checkbox" name="product_is_active" {% if form.product_is_active.value %}checked{% endif %}>
+
+
+                <p><label for="id_product_is_active">Produto está ativo? :</label></p>
+                <input type="checkbox" name="product_is_active" id="id_product_is_active" {% if form.product_is_active.value %}checked{% endif %}>
             </div>
 
             <div class="final">
