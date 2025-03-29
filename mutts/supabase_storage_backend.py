@@ -8,6 +8,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 class SupabaseStorage(Storage):
+
+    def _save(self, name, content):
+        path = self._get_path(name)
+        content_type = mimetypes.guess_type(name)[0] or "application/octet-stream"
+        
+        # Make sure content is at the start
+        content.open()
+        
+        self.client.storage.from_(self.supabase_bucket).upload(
+            path,
+            content.file,  # Use the raw in-memory file
+            {
+                "content-type": content_type,
+                "x-upsert": "true"
+            }
+        )
+        return name
+
     def __init__(self):
         self.supabase_url = os.getenv("SUPABASE_URL")
         self.supabase_key = os.getenv("SUPABASE_KEY")
@@ -16,7 +34,9 @@ class SupabaseStorage(Storage):
         self.client = create_client(self.supabase_url, self.supabase_key)
 
     def _get_path(self, name):
-        return os.path.join(self.path_prefix, os.path.basename(name))
+        if name.startswith(self.path_prefix):
+            return name
+        return f"{self.path_prefix}{name}"
 
 
     def _open(self, name, mode='rb'):
@@ -24,23 +44,10 @@ class SupabaseStorage(Storage):
         return ContentFile(response)
 
  
-    def _save(self, name, content):
-        path = self._get_path(name)
-        content_type = mimetypes.guess_type(name)[0] or "application/octet-stream"
 
-        if hasattr(content, 'open'):
-            content.open()
-        file_data = content.read()
 
-        self.client.storage.from_(self.supabase_bucket).upload(
-            path,
-            file_data,
-            file_options={
-                "content-type": content_type,
-                "x-upsert": "true"
-            }
-        )
-        return name
+
+
 
 
 

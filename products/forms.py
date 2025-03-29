@@ -1,6 +1,7 @@
 from django import forms
 from . import models
 from django.core.exceptions import ValidationError
+from .models import Product
 
 class CreateProduct(forms.ModelForm):
     class Meta:
@@ -81,3 +82,31 @@ class EditProductForm(forms.ModelForm):
                 'product_image_url': 'Imagem do Produto:',
                 'product_is_active': 'Produto está ativo? :',
                 }
+
+
+class ProductForm(forms.ModelForm):
+    image_upload = forms.ImageField(required=False)
+
+    class Meta:
+        model = Product
+        fields = [
+            'product_code',
+            'product_short_description',
+            'product_unit_price',
+            'product_stock',
+            'product_image_url',  # This will be updated in the save()
+        ]
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        image = self.cleaned_data.get('image_upload')
+        if image:
+            from utils.supabase_upload import upload_image_to_supabase
+            url = upload_image_to_supabase(image, image.name)
+            instance.product_image_url = url
+
+        if commit:
+            instance.save()
+        return instance
+
