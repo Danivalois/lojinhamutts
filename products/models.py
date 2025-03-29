@@ -31,7 +31,7 @@ class Product(models.Model):
     product_height = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
     product_width = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
     product_length = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
-    product_image_url = models.CharField(max_length=900, blank=True, null=True, help_text="This should be a full public URL to the image in Supabase.")
+    product_image_url = models.CharField(max_length=900, blank=True, null=True)
     product_created_at = models.DateTimeField(auto_now_add=True)
     product_updated_at = models.DateTimeField(auto_now=True)
     product_is_active = models.BooleanField(default=True)
