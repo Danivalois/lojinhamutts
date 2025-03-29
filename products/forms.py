@@ -90,11 +90,22 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = [
-            'product_code',
-            'product_short_description',
-            'product_unit_price',
-            'product_stock',
-            'product_image_url',  # This will be updated in the save()
+                'product_code',
+                'product_short_description',
+                'product_description_long',
+                'product_category',
+                'product_unit_price',
+                'product_stock',
+                'product_thumbnail_url',
+                'product_brand',
+                'product_sku',
+                'product_weight',
+                'product_dimensions',
+                'product_length',
+                'product_width',
+                'product_height',
+                'product_image_url',
+                'product_is_active',
         ]
 
     def save(self, commit=True):
