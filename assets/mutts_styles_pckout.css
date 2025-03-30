@@ -53,9 +53,9 @@ html {
 
 .product_image img {
   display: block;
-  width: 400px; 
+  width: 280px; 
   margin:0 auto;
-  padding: 70px 0px 70px 0px;
+  padding: 70px 0px 40px 0px;
 
 }
 .product_image {
