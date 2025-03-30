@@ -13,6 +13,21 @@
                 {{ customer_form.as_p }}
                 {{ address_form.as_p }}
 
+
+                <div class="alert-danger_2">
+                    {% if address_form.errors %}
+                    <div class="alert-danger">
+                        <p>Preenchimento dos campos obrigatórios</p>
+                    </div>    
+                    {% endif %}
+                    {% if customer_form.errors %}    
+                    <div class="alert-danger_1">
+                        <p>Preenchimento dos campos obrigatórios, CPF Inválido ou CPF já existente</p>
+                    </div>    
+                    {% endif %}        
+                    
+                </div>
+
                 <div class="final">
                    <button type="submit">Adicionar</button>
                 </div>

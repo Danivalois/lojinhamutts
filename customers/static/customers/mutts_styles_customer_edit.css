@@ -98,9 +98,21 @@ input {
     list-style-type: none;
 }
 
-.final{
-    margin: 25px 0px 40px 0px;
+
+
+.alert-danger {
+  font-family: 'Signika Local', 'Signika', sans-serif;
+  margin-left: 20px;
+  font-size: 0.5em;
+  color: red;
+  }
+  
+
+.final {
+  margin: 20px 0px 40px 0px;
 }
+
+
 
 /* Style the submit button */
 .final button {

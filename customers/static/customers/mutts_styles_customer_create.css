@@ -148,8 +148,26 @@
 }
 
 
+
+
+
+.alert-danger_1 {
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    margin-left: 20px;
+    font-size: 0.5em;
+    color: red;
+    }
+
+.alert-danger {
+    font-family: 'Signika Local', 'Signika', sans-serif;
+    margin-left: 20px;
+    font-size: 0.5em;
+    color: red;
+    }
+
+
 .final{
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px 40px 0px;
 }
 
 /* Style the submit button */

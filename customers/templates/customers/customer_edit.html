@@ -21,22 +21,28 @@
                 <label for="id_customer_house_number">Número:</label>
                 <input type="text" name="customer_house_number" value="{{ address_form.customer_house_number.value }}" maxlength="10" required id="id_customer_house_number">
                 <label for="id_customer_complement">Complemento:</label>
-                <input type="text" name="customer_complement" value="{{ address_form.customer_complement.value }}" maxlength="100" id="id_customer_complement">
+                <input type="text" name="customer_complement" value="{{ address_form.customer_complement.value|default:'' }}" maxlength="100" id="id_customer_complement">
                 <label for="id_customer_phone">Celular:</label>
-                <input type="text" name="customer_phone" value="{{ address_form.customer_phone.value }}" maxlength="15" id="id_customer_phone">
+                <input type="text" name="customer_phone" value="{{ address_form.customer_phone.value|default:'' }}" maxlength="15" id="id_customer_phone">
                 <label for="id_customer_email">E-mail:</label>
-                <input type="email" name="customer_email" value="{{ address_form.customer_email.value }}" maxlength="254" id="id_customer_email">
-        </form>
+                <input type="email" name="customer_email" value="{{ address_form.customer_email.value|default:'' }}" maxlength="254" id="id_customer_email">
+       
+        <div class="alert-danger">
+            <p> </p><br>
+            {% if address_form.errors %}
+                <p>Preenchimento dos campos obrigatórios</p>
+            {% endif %}
+            <p> </p><br>
+        </div>
+       
+       
         <div class="final">
-            <p> </p>
+            
             <button type="submit" value="Save">Alterar</button>
-            <p> </p>
-            <p> </p>
+
         </div>    
     </div>
-
-
-
+</form>
 
 
 
