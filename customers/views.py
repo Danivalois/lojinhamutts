@@ -16,10 +16,7 @@ def customer_create(request):
             address.customer = customer
             address.save()
             return redirect('customers:customer_list')
-        else:
-            print("Form validation failed.")
-            print("Customer Errors:", customer_form.errors)
-            print("Address Errors:", address_form.errors)
+       
     else:
         customer_form = forms.CreateCustomerForm(initial={'customer_cpf': ''})
         address_form = forms.CreateAddressForm()
