@@ -28,7 +28,7 @@ def precheckout_view(request):
     form = PrecheckoutForm(initial={
         'product_code': product.product_code,
         'product_short_description': product.product_short_description,
-        'product_image_url': product.product_image_url.url if product.product_image_url else '',
+        'product_image_url': product.product_image_url,
         'product_unit_price': product.product_unit_price,        
     })
     return render(request, 'checkouts/precheckout.html', {'form': form})
@@ -80,7 +80,7 @@ def checkout_view(request):
             'customer_state': address_data.get('uf', ''),
             'product_code': product.product_code,
             'product_short_description': product.product_short_description,
-            'product_image_url': product.product_image_url.url if product.product_image_url else '',
+            'product_image_url': product.product_image_url,
             'product_unit_price': product.product_unit_price,
         }
         
@@ -131,7 +131,7 @@ def validate_cpf(request):
 
           
         #recalculating the total price
-        pu = round(request.POST.get("product_unit_price", "0"), 2)
+        pu = request.POST.get("product_unit_price")
         qty = float(request.POST.get("order_quantity", "1"))  # Default to 1 to avoid division by zero
         total_price = float(pu) * qty  # Calculate total product price
         # Loop through each shipping option

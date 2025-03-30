@@ -70,7 +70,7 @@ class CheckoutForm(forms.Form):
     required=False,  
     widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # ✅ Keeps it visible and included in form submission
     )
-    product_image_url = forms.CharField(widget=forms.HiddenInput())
+    product_image_url = forms.CharField(max_length=900)
     product_unit_price = forms.DecimalField(
         disabled=True,  # Prevent user from editing
         required=False,  # Avoid validation issues
@@ -85,7 +85,7 @@ class PrecheckoutForm(forms.Form):
     required=False,  
     widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # ✅ Keeps it visible and included in form submission
     )
-    product_image_url = forms.CharField(widget=forms.HiddenInput())
+    product_image_url = forms.CharField(max_length=900)
     product_unit_price = forms.DecimalField(
         disabled=True,  # Prevent user from editing
         required=False,  # Avoid validation issues
@@ -97,4 +97,3 @@ class PrecheckoutForm(forms.Form):
     order_quantity = forms.IntegerField(min_value=1, required=True, initial=1)
 
 
-    

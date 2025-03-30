@@ -9,13 +9,12 @@
     {% csrf_token %}
     <input type="hidden" name="product_code" value="{{ form.product_code.value }}" readonly>
     <div class="grade_product">
-        <div class="product_image">
-            {% if form.product_image_url.value %}
-            <img src="{{ form.product_image_url.value }}" alt="Product Image" width="600">
-            {% else %}
-            <p>No image available</p>
-            {% endif %}
-        </div>
+      {% if form.product_image_url.value %}
+        <img src="{{ form.product_image_url.value }}" alt="Product Image" style="max-width: 200px;">
+      {% else %}
+        <p>Imagem não disponível.</p>
+      {% endif %}
+    
     
         <div class="desc_up">
           <p>Descrição:</p>

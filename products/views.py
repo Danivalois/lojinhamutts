@@ -38,18 +38,6 @@ def product_create(request):
         form = forms.ProductForm()
     return render(request, 'products/product_create.html', { 'form': form })
 
-# @login_required(login_url="/accounts/login/")
-# def product_edit(request, product_code): #Pass product code by url
-#     product = get_object_or_404(Product, product_code=product_code)  # Look up by product_code
-#     if request.method == 'POST':
-#         form = EditProductForm(request.POST, request.FILES, instance=product) # Bind to existing product
-#         if form.is_valid():
-#             form.save() # Save the changes
-#             return redirect('products:product_list')  # Redirect to product list URL
-#     else:
-#         form = EditProductForm(instance=product)  # Populate form with existing product data
-#     return render(request, 'products/product_edit.html', {'form': form, 'product': product})
-
 @login_required(login_url="/accounts/login/")
 def product_delete(request, product_code):
     product = get_object_or_404(Product, product_code=product_code)  # Look up by product_code
