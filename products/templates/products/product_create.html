@@ -12,31 +12,23 @@
         
         <form class="site-form" action="{% url 'products:product_create' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
-            {% if form.errors %}
-                <div class="alert alert-danger">
-                    <strong>Form Errors:</strong>
-                    <ul>
-                        {% for field, errors in form.errors.items %}
-                            {% for error in errors %}
-                                <li>{{ field }}: {{ error }}</li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-
             {{ form.as_p }}  {# Use form.as_p, form.as_ul, or custom rendering #}
-            <div class="final">
-            
-                <p> </p><br>
-                </div>
 
+            
+        <div class="alert-danger">
+            <p> </p><br>
+            {% if form.errors %}
+                <p>Preenchimento dos campos obrigatórios</p>
+            {% endif %}
+            <p> </p><br>
+        </div>
+        <div class="final">
             <input type="submit" value="Adicionar">
-            <div class="final">
-            <p> </p><br>
-            <p> </p><br>
-            </div>
+        </div>
+
+
+
+
         </form>
     </div>
 

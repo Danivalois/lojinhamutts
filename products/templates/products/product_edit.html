@@ -107,28 +107,18 @@
                 <input type="checkbox" name="product_is_active" id="id_product_is_active" {% if form.product_is_active.value %}checked{% endif %}>
             </div>
 
-            <div class="final">
-                <p> </p><br>
-            </div>
-
-            <input type="submit" value="Alterar">
-
-            <div class="final">
+            <div class="alert-danger">
                 <p> </p><br>
                 {% if form.errors %}
-                    <div class="alert alert-danger">
-                        <strong>Form Errors:</strong>
-                        <ul>
-                            {% for field, errors in form.errors.items %}
-                                {% for error in errors %}
-                                    <li>{{ field }}: {{ error }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                        </ul>
-                    </div>
+                   <p>Preenchimento dos campos obrigatórios</p>
                 {% endif %}
                 <p> </p><br>
             </div>
+            <div class="final">
+            <input type="submit" value="Alterar">
+            </div>
+
+ 
         </form>
     </div>
 
