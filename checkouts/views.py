@@ -132,6 +132,7 @@ def validate_cpf(request):
           
         #recalculating the total price
         pu = request.POST.get("product_unit_price")
+        pu = pu.replace(",", ".") 
         qty = float(request.POST.get("order_quantity", "1"))  # Default to 1 to avoid division by zero
         total_price = float(pu) * qty  # Calculate total product price
         # Loop through each shipping option
@@ -144,10 +145,7 @@ def validate_cpf(request):
         
         product_code = form_data["product_code"]
         product = get_object_or_404(Product, product_code=product_code)
-        if product.product_image_url:
-            form_data["product_image_url"] = f"{settings.MEDIA_URL}{product.product_image_url}"  # Ensure correct media path
-        else:
-            form_data["product_image_url"] = ""
+        form_data["product_image_url"] = product.product_image_url or ""
         form = CheckoutForm(initial=form_data)
         if is_valid == False and flag_empty == False:
             message="Todos os campos são obrigatórios.  CPF Inválido."
