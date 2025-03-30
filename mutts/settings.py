@@ -74,6 +74,7 @@ SITE_URL = os.getenv("SITE_URL", "http://127.0.0.1:8000")
 # Application definition
 
 INSTALLED_APPS = [
+    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
