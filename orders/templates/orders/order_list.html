@@ -1,6 +1,7 @@
 {% extends 'base_layout_ops_order.html' %}
 {% load static %}
 {% block content %}
+{% load l10n %}
 <link rel="stylesheet" href="{% static 'orders/mutts_styles_order_list.css' %}">
 
 <div class="overallwrapper">
@@ -14,7 +15,7 @@
             <div class="customer_block">
                 <div class="order_1"><a href="{% url 'orders:order_show' order_ID=order.order_ID %}">{{ order.order_ID }}</a></div>
                 <div class="order_2">{{ order.order_product.product_code }}</div>
-                <div class="order_3">{{ order.order_quantity }} R$ {{ order.order_total_price }}</div>
+                <div class="order_3">{{ order.order_quantity }} R$ {{ order.order_total_price|localize }}</div>
                 <div class="order_delete">
                     <a href="{% url 'orders:order_delete' order_ID=order.order_ID %}">
                     <img src="{% static 'delete_icon.png' %}" alt="delete">

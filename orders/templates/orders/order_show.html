@@ -1,6 +1,7 @@
 {% extends 'base_layout_ops_order.html' %}
 {% load static %}
 {% block content %}
+{% load l10n %}
 <link rel="stylesheet" href="{% static 'orders/mutts_styles_order_show.css' %}">
 <form class="site-form" action="{% url 'orders:order_show' order.order_ID %}" method="post" enctype="multipart/form-data" >
 <div class="create-product">

@@ -150,10 +150,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# Internationalization   , 'en-us'
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -163,6 +161,10 @@ USE_TZ = True
 
 THOUSAND_SEPARATOR='.',
 USE_THOUSAND_SEPARATOR=True
+
+LANGUAGE_CODE = 'pt-br'
+
+USE_L10N = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -193,4 +195,5 @@ MEDIA_URL = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{SUPABAS
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = "mutts.supabase_storage_backend.SupabaseStorage"
+
 

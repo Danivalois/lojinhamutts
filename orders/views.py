@@ -10,7 +10,6 @@ from .forms import CreateOrder
 
 
 
-
 @login_required(login_url="/accounts/login/")
 def order_delete(request, order_ID):
     order = get_object_or_404(Order, order_ID=order_ID)
