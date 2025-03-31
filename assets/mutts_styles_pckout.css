@@ -47,7 +47,7 @@ html {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 5;
-  width: 100%;
+  width: 90%;
   margin: 0px 0px 0px 0px;
 }
 
@@ -62,7 +62,7 @@ html {
 .product_image img {
   display: block;
   margin: auto;
-  width: 100%;         /* Responsive width */
+  width: 90%;         /* Responsive width */
   max-width: 310px;   /* Cap size for large screens */
   height: auto;       /* Maintain aspect ratio */
   justify-self: center;
@@ -81,7 +81,7 @@ html {
   color: var(--secondary);
   text-shadow: 4px 4px 6px var(--shadow);
   font-size: 2.1em;
-  width: 100%;
+  width: 90%;
 }
 
 input::placeholder {
@@ -95,7 +95,7 @@ input::placeholder {
   border: none;
   color: var(--placeholder);
   font-size: 1em;
-  width: 100%;
+  width: 90%;
 }
 
 .desc_up p  {
