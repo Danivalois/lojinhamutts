@@ -62,7 +62,7 @@ html {
 .product_image img {
   display: block;
   margin: auto;
-  width: 90%;         /* Responsive width */
+  width: 100%;         /* Responsive width */
   max-width: 310px;   /* Cap size for large screens */
   height: auto;       /* Maintain aspect ratio */
   justify-self: center;
