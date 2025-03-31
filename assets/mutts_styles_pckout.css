@@ -43,14 +43,28 @@ html {
 }
 
 
+.grade_product {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 5;
+  width: 95%;
+  margin: 0px 0px 0px 0px;
+}
 
-
+.product_image {
+  grid-column: 1;
+  grid-row:1;
+}
+.desc_up {
+  grid-column: 1;
+  grid-row:2 /span 5;
+}
 .product_image img {
   display: block;
   width: 90%;         /* Responsive width */
-  max-width: 400px;   /* Cap size for large screens */
+  max-width: 300px;   /* Cap size for large screens */
   height: auto;       /* Maintain aspect ratio */
-  margin: 0 auto;
+  justify-self: center;
   padding: 70px 0 40px 0;
 }
 
@@ -59,7 +73,7 @@ html {
   font-family: 'Signika Local', 'Signika', sans-serif; 
   font-weight: bold;
   background: none;
-  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 30px;
   border-radius: 20px; 
   overflow: hidden; 
   border: none;
@@ -87,6 +101,7 @@ input::placeholder {
 
   font-family: 'Signika Local', 'Signika', sans-serif; 
   background: none;
+  margin: 0px 0px 0px 20px;
   padding: 0px 0px;
   border-radius: 0px; 
   overflow: hidden; 
