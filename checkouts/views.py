@@ -17,6 +17,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .services import send_order_emails
 
 
+
 MERCADOPAGO_ACCESS_TOKEN = os.getenv("MERCADOPAGO_ACCESS_TOKEN")  # Store in .env file
 
 

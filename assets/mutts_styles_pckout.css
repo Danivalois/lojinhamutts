@@ -42,26 +42,17 @@ html {
   padding: 0;
 }
 
-.grade_product {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px; 
-  width: 95%;
-  margin: 0px 0px 0px 20px;
+
+
+
+.product_image img {
+  display: block;
+  width: 90%;         /* Responsive width */
+  max-width: 600px;   /* Cap size for large screens */
+  height: auto;       /* Maintain aspect ratio */
+  margin: 0 auto;
+  padding: 70px 0 40px 0;
 }
-
-
-@media (max-width: 768px) {
-  .product_image img {
-    
-    width: 400px;
-    padding: 40px 0;
-  }
-}
-
-
-
 
 
 .desc_up input  {
@@ -103,17 +94,6 @@ input::placeholder {
   color: var(--secondary);
   font-size: 1em;
 }
-
-
-
-/* .form {
-display: flex; 
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 10px; 
-} */
-
 
 
 .form input {
