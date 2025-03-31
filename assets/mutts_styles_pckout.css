@@ -61,11 +61,12 @@ html {
 }
 .product_image img {
   display: block;
+  margin: auto;
   width: 90%;         /* Responsive width */
-  max-width: 300px;   /* Cap size for large screens */
+  max-width: 360px;   /* Cap size for large screens */
   height: auto;       /* Maintain aspect ratio */
   justify-self: center;
-  padding: 70px 0 40px 0;
+  padding: 120px 0 40px 0;
 }
 
 
@@ -79,7 +80,7 @@ html {
   border: none;
   color: var(--secondary);
   text-shadow: 4px 4px 6px var(--shadow);
-  font-size: 2em;
+  font-size: 2.1em;
   width: 100%;
 }
 
@@ -107,7 +108,7 @@ input::placeholder {
   overflow: hidden; 
   border: none;
   color: var(--secondary);
-  font-size: 1em;
+  font-size: 1.05em;
 }
 
 
