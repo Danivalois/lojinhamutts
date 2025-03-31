@@ -63,10 +63,10 @@ html {
   display: block;
   margin: auto;
   width: 90%;         /* Responsive width */
-  max-width: 360px;   /* Cap size for large screens */
+  max-width: 330px;   /* Cap size for large screens */
   height: auto;       /* Maintain aspect ratio */
   justify-self: center;
-  padding: 120px 0 40px 0;
+  padding: 150px 0 40px 0;
 }
 
 
