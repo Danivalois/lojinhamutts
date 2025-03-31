@@ -54,7 +54,7 @@ html {
 
 @media (max-width: 768px) {
   .product_image img {
-    width: 100%;
+    
     width: 400px;
     padding: 40px 0;
   }
