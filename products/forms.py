@@ -38,7 +38,7 @@ class CreateProduct(forms.ModelForm):
                 'product_dimensions': 'Dimensões do Produto (cm):',
                 'product_height': 'Altura da embalagem (cm):',
                 'product_width': 'Largura da embalagem (cm):',
-                'product_length': 'Comprimento do embalagem (cm):',
+                'product_length': 'Comprimento da embalagem (cm):',
                 'product_image_url': 'Imagem do Produto:',
                 'product_is_active': 'Produto está ativo? :',
                 }
