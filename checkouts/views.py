@@ -65,11 +65,14 @@ def checkout_view(request):
 
         # Calculate total weight for shipping
         product_wgt = quantity * product.product_weight
-       
-
-        # Fetch freight costs for all services
+        product_cubado=product.product_length + product.product_width + product.product_height
+        if product_wgt > 30 or product.product_length>70 or product.product_width>70 or product.product_height>70 or product_cubado>90:
+            messages.error(request, "Dimensões do produto ou peso excedendo o limite")
+            return redirect(reverse('checkouts:precheckout') + f"?productCode={product_code}")
+    
+            # Fetch freight costs for all services
         freight_data = fetch_freight_cost(zip_code, product_wgt, product.product_height, product.product_width, product.product_length)
-      
+
 
         # Prefill checkout form dynamically
         form_initial_data = {

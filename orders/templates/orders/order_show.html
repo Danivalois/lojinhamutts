@@ -13,6 +13,18 @@
             <div class="total_amount">
                <p>{{ order_total_price }}</p>
             </div>
+            <div class="label_total_amount">
+                <p>Data da Ordem:</p>
+            </div>    
+            <div class="total_amount">
+                {{ form.instance.order_created_at|date:"d/m/Y H:i" }}</p>
+            </div>
+            <div class="label_total_amount">
+                <p>Última Atualização:</p>
+            </div>
+            <div class="total_amount">    
+                {{ form.instance.order_updated_at|date:"d/m/Y H:i" }}</p>
+            </div>
             <div class="final">
                 <button type="submit" value="Save">Alterar</button>
             </div>    
