@@ -64,7 +64,7 @@ EMAIL_HOST = 'smtp.gmail.com'  # Example: 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'apln2911@gmail.com'
-EMAIL_HOST_PASSWORD = 'tjaqarfoambxbnat'  # Use environment variables for security!
+EMAIL_HOST_PASSWORD = 'laedjoqrfvtowooo'  # Use environment variables for security!
 DEFAULT_FROM_EMAIL = 'apln2911@gmail.com'
 
 
