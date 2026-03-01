@@ -246,7 +246,7 @@ def process_payment(request):
                 order_product=get_object_or_404(Product, product_code=product_code),
                 order_address=address,
                 order_ID=order_id,
-                order_payment_ID="",  # Set after Mercado Pago response
+                order_payment_ID=None,  # Set after Mercado Pago response
                 order_status="pending_payment",
                 order_quantity=quantity,
                 order_freight_cost=shipping_cost,
