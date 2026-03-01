@@ -56,7 +56,7 @@ def upload_to_supabase(file):
     file_data = file.read()
 
     full_path = f"{SUPABASE_PATH_PREFIX}{filename}"
-
+    print("XXXX full_path", full_path)
     # Upload the image
     client.storage.from_(SUPABASE_BUCKET).upload(
         path=full_path,
@@ -68,6 +68,7 @@ def upload_to_supabase(file):
     )
 
     public_url = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{full_path}"
+    print("XXXX public url", public_url)
     return public_url
 
 @login_required(login_url="/accounts/login/")
