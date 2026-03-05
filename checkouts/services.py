@@ -132,14 +132,20 @@ def send_whatsapp(order):
     f"Total: R$ {total}"
 )
 
-    msg = client.messages.create(
-        from_='whatsapp:+14155238886',
-        body=message,
-        to='whatsapp:+5521996368806'
-    )
+    phones = [
+        "whatsapp:+5521996368806",
+        "whatsapp:+5521979234334",
+   
+    ]
 
-    print("Twilio SID:", msg.sid)
-    print("Status:", msg.status)
+    for phone in phones:
+        msg = client.messages.create(
+            from_='whatsapp:+14155238886',
+            body=message,
+            to=phone
+        )
+
+        print("Sent to:", phone, "SID:", msg.sid)
 
 
 
