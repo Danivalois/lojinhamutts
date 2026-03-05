@@ -116,7 +116,7 @@ def send_whatsapp(order):
     
     address = Address.objects.get(instance=order.order_address)
     total = (order.product_unit_price * order.order_quantity) + order.order_freight_cost
-
+    print("XXXXX landed whatsapp, order, address and total", order, address, total)
     message = f"""
     📦 Novo Pedido Recebido
     Pedido: {order.order_ID}
@@ -126,7 +126,7 @@ def send_whatsapp(order):
     Cidade-UF: { address.customer_city}-{address.customer_state}
     Total: R$ {total}
     """
-    print("XXXX order twilio", order)
+    
     client.messages.create(
         from_='whatsapp:+14155238886',
         body=message,
@@ -139,6 +139,7 @@ def send_order_emails(order):
     """
     Sends an email to both the Admin and Customer after a successful payment.
     """
+    print("XXXX order - arrived send email", order)
     try:
         total_order_amount = (order.product_unit_price * order.order_quantity) + order.order_freight_cost
         # ✅ Construct the Absolute Product Image URL
@@ -150,6 +151,7 @@ def send_order_emails(order):
             "total_order_amount": total_order_amount,  # Pass computed value
             "product_image_url": product_image_url  # Pass Image URL
         })
+        print("XXXX call send whatsapp")
         send_whatsapp(order)
         send_mail(
             subject=admin_subject,
