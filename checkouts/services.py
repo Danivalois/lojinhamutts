@@ -108,7 +108,24 @@ def fetch_freight_cost(customer_zip_code, product_weight, product_height, produc
     return freight_results  # Returns a dictionary with all freight options
 
 
+from twilio.rest import Client
 
+def send_whatsapp(order):
+    client = Client("TWILIO_SID", "TWILIO_AUTH_TOKEN")
+
+    total = (order.product_unit_price * order.order_quantity) + order.order_freight_cost
+
+    message = f"""
+📦 Novo Pedido Recebido
+Pedido: {order.order_ID}
+Total: R$ {total}
+"""
+
+    client.messages.create(
+        from_='whatsapp:+5521996368806',
+        body=message,
+        to='whatsapp:+5521996368806'
+    )
 
 def send_order_emails(order):
     """
@@ -125,6 +142,7 @@ def send_order_emails(order):
             "total_order_amount": total_order_amount,  # Pass computed value
             "product_image_url": product_image_url  # Pass Image URL
         })
+        send_whatsapp(order)
         send_mail(
             subject=admin_subject,
             message="teste admin",

@@ -115,10 +115,12 @@ def validate_cpf(request):
         house_number=request.POST.get("customer_house_number")
         name=request.POST.get("customer_name")
         #flag_empty=fill_check(phone, email, house_number)
-        if phone=='' or email=='' or house_number=='' or name=='':
+        if email=='' or house_number=='' or name=='':
             flag_empty=False
         else:
-            flag_empty=True    
+            flag_empty=True  
+        print("XXX phone", phone)  
+        print("XXX flagempty", flag_empty)
         if "terms_accepted" not in request.POST:
             flag_empty=False
         cpf = request.POST.get("customer_cpf")  # Get CPF from the submitted form

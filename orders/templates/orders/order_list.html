@@ -13,7 +13,7 @@
       
             {% for order in orders %}
             <div class="customer_block">
-                <div class="order_1"><a href="{% url 'orders:order_show' order_ID=order.order_ID %}">{{ order.order_ID }}</a></div>
+                <div class="order_1"><a href="{% url 'orders:order_show' order_ID=order.order_ID %}">{{ order.order_ID |truncatechars:6 }}</a> <span class="order_n"> {{ order.order_created_at|date:"d/m/y" }} </span></div>
                 <div class="order_2">{{ order.order_product.product_code }}</div>
                 <div class="order_3">{{ order.order_quantity }} R$ {{ order.order_total_price|localize }}</div>
                 <div class="order_delete">

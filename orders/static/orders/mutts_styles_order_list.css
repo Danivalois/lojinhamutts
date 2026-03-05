@@ -112,6 +112,17 @@
     width: 60%;
   }
 
+
+  .order_n {
+
+
+    font-family: 'Signika Local', 'Signika', sans-serif; 
+    font-size: 0.9em;
+    color: var(--secondary) !important;
+    text-shadow: 4px 4px 6px var(--shadow);
+  }
+
+
   .order_4 {
     grid-column: 1;
     grid-row: 2;
