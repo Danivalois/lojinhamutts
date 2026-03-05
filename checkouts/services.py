@@ -112,28 +112,36 @@ from twilio.rest import Client
 from customers.models import Address
 
 def send_whatsapp(order):
-    client = Client("TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN")
-    
-    address = Address.objects.get(instance=order.order_address)
+
+    client = Client(
+        os.environ.get("TWILIO_ACCOUNT_SID"),
+        os.environ.get("TWILIO_AUTH_TOKEN")
+    )
+
+    address = order.order_address
+
     total = (order.product_unit_price * order.order_quantity) + order.order_freight_cost
-    print("XXXXX landed whatsapp, order, address and total", order, address, total)
-    message = f"""
-    📦 Novo Pedido Recebido
-    Pedido: {order.order_ID}
-    Produto: {order.order_product}
-    CEP: {address.customer_zip_code}
-    Bairro: { address.customer_neighborhood}
-    Cidade-UF: { address.customer_city}-{address.customer_state}
-    Total: R$ {total}
-    """
-    
-    client.messages.create(
+
+    message = (
+    f"📦 Novo Pedido Recebido\n"
+    f"Pedido: {order.order_ID}\n"
+    f"Produto: {order.order_product}\n"
+    f"CEP: {address.customer_zip_code}\n"
+    f"Bairro: {address.customer_neighborhood}\n"
+    f"Cidade-UF: {address.customer_city}-{address.customer_state}\n"
+    f"Total: R$ {total}"
+)
+
+    msg = client.messages.create(
         from_='whatsapp:+14155238886',
         body=message,
         to='whatsapp:+5521996368806'
     )
-    print("Twilio SID:", message.sid)
-    print("Status:", message.status)
+
+    print("Twilio SID:", msg.sid)
+    print("Status:", msg.status)
+
+
 
 def send_order_emails(order):
     """
