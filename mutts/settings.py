@@ -67,6 +67,10 @@ EMAIL_HOST_USER = 'apln2911@gmail.com'
 EMAIL_HOST_PASSWORD = 'laedjoqrfvtowooo'  # Use environment variables for security!
 DEFAULT_FROM_EMAIL = 'apln2911@gmail.com'
 
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
+
+
 
 SITE_URL = os.getenv("SITE_URL", "http://127.0.0.1:8000")
 
