@@ -109,23 +109,31 @@ def fetch_freight_cost(customer_zip_code, product_weight, product_height, produc
 
 
 from twilio.rest import Client
+from customers.models import Address
 
 def send_whatsapp(order):
-    client = Client("TWILIO_SID", "TWILIO_AUTH_TOKEN")
-
+    client = Client("TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN")
+    
+    address = Address.objects.get(instance=order.order_address)
     total = (order.product_unit_price * order.order_quantity) + order.order_freight_cost
 
     message = f"""
-📦 Novo Pedido Recebido
-Pedido: {order.order_ID}
-Total: R$ {total}
-"""
-
+    📦 Novo Pedido Recebido
+    Pedido: {order.order_ID}
+    Produto: {order.order_product}
+    CEP: {address.customer_zip_code}
+    Bairro: { address.customer_neighborhood}
+    Cidade-UF: { address.customer_city}-{address.customer_state}
+    Total: R$ {total}
+    """
+    print("XXXX order twilio", order)
     client.messages.create(
-        from_='whatsapp:+5521996368806',
+        from_='whatsapp:+14155238886',
         body=message,
         to='whatsapp:+5521996368806'
     )
+    print("Twilio SID:", message.sid)
+    print("Status:", message.status)
 
 def send_order_emails(order):
     """
