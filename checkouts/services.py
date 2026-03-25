@@ -171,7 +171,7 @@ def send_order_emails(order):
             subject=admin_subject,
             message="teste admin",
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=["apln2911@gmail.com"],  # Change to your admin email
+            recipient_list=["valois.daniela@gmail.com"],  # Change to your admin email
             html_message=admin_message,
             fail_silently=False,
         )
