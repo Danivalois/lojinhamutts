@@ -42,6 +42,10 @@ class CheckoutForm(forms.Form):
     order_total_price = forms.DecimalField(disabled=True)
     
     # Freight 
+
+    price_loggi = forms.DecimalField(required=False, widget=forms.NumberInput(attrs={'step': 'any'}))
+    leadtime_loggi = forms.IntegerField(required=False)
+    total_loggi = forms.DecimalField(required=False, widget=forms.NumberInput(attrs={'step': 'any'}))
     price_sedex = forms.DecimalField(disabled=True)
     leadtime_sedex = forms.IntegerField(disabled=True)
     total_sedex=forms.DecimalField(disabled=True)
@@ -59,6 +63,7 @@ class CheckoutForm(forms.Form):
         ('PAC', 'PAC'),
         ('SEDEX', 'SEDEX'),
         ('JADLOG_EXP', 'JADLOG_EXP'),
+        ('LOGGI', 'LOGGI'), 
     ]))
 
    # Product

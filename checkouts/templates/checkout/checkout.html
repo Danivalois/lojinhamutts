@@ -15,7 +15,9 @@
 
     <form method="POST" action="{% url 'checkouts:validate_cpf' %}" readonly>
         {% csrf_token %}
-
+        <input type="hidden" name="price_loggi" value="{{ form.price_loggi.value }}">
+        <input type="hidden" name="leadtime_loggi" value="{{ form.leadtime_loggi.value}}">
+        <input type="hidden" name="total_loggi" value="{{ form.total_loggi.value }}">
            
 
         <input type= "hidden" name="product_unit_price" value="{{ form.product_unit_price.value }}">
@@ -112,6 +114,34 @@
     
     <div class="flex_container">
         <div class="freight_container_1">
+
+
+
+
+
+            {% if form.price_loggi.value and form.price_loggi.value != "0.00" and form.price_loggi.value != "Unavailable" %}
+            <label class="freight_option">
+                <input type="radio" name="selected_freight" value="loggi" required>
+                <div class="freight_table_1"> 
+                    <img src="{% static 'loggi_256.png' %}" alt="loggi_fforwarder" width="350"><br>
+                    <label>Frete (R$):</label><br>
+                    <p>{{ form.price_loggi.value|floatformat:2 }}</p>
+                    <label>Prazo (dia):</label>
+                    <p>{{ form.leadtime_loggi.value|floatformat:0 }}</p>
+                    <label>Valor Total Pedido (R$):</label>
+                    <div class="tot_val">
+                        <p>{{ form.total_loggi.value|floatformat:2 }}</p>
+                    </div>    
+                </div>
+            </label>
+            {% endif %}
+
+
+
+
+
+
+
             {% if form.price_pacmini.value != "0.00" and form.price_pacmini.value != "Unavailable" %}
             <label class="freight_option">
                 <input type="radio" name="selected_freight" value="pacmini" required>

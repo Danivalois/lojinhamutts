@@ -61,33 +61,29 @@ def clean_number(value):
     value = float(value) if isinstance(value, Decimal) else value  # Ensure it's a float
     return f"{value:.2f}"  # Format as string with 2 decimal places
 
-def fetch_freight_cost(customer_zip_code, product_weight, product_height, product_width, product_length):
-    # Define the freight services to check
+
+
+def fetch_freight_cost(customer_zip_code, product_weight, product_height, product_width, product_length, quantity=1):
+    # Define the API freight services to check
     freight_services = ["SEDEX", "PAC", "PACMINI", "JADLOG_EXP"]
-    
     freight_results = {}
 
     for service in freight_services:
-        # Prepare the payload as form-data (key-value pairs)
         payload = {
             "plataforma_id": "66780",
             "plataforma_chave": "$2y$10$1uqdW6t3fFS.4nk7nueRDujOYSPvTf81RSF88NADpFQXTjmT5C.HS",
             "cep_origem": "22793084",
-            "cep_destino": customer_zip_code.replace("-", ""),  # Remove dash from ZIP
-            "valor_seguro": "",  # Optional, add if required
+            "cep_destino": customer_zip_code.replace("-", ""),
+            "valor_seguro": "",
             "servico": service,
             "peso": clean_number(product_weight),
             "altura": clean_number(product_height),
             "largura": clean_number(product_width),
             "comprimento": clean_number(product_length),
- 
         }
        
         try:
-            # Send the request as form-data (not JSON)
             response = requests.post("https://mandabem.com.br/ws/valor_envio", data=payload, timeout=10)  
-            #print(f'Manda Bem response for {service}:', response.status_code, response.text)
-
             if response.status_code == 200:
                 data = response.json()
                 if "resultado" in data and service in data["resultado"]:
@@ -96,16 +92,25 @@ def fetch_freight_cost(customer_zip_code, product_weight, product_height, produc
                         "prazo": data["resultado"][service].get("prazo", ""),
                     }
                 else:
-                    print(f"Warning: No valid response for {service}")
                     freight_results[service] = {"valor": "0.00", "prazo": ""}
             else:
-                #print(f"API request failed for {service} with status {response.status_code}")
                 freight_results[service] = {"valor": "0.00", "prazo": ""}
-        except requests.RequestException as e:
-            #print(f"Request failed for {service}: {e}")
+        except requests.RequestException:
             freight_results[service] = {"valor": "0.00", "prazo": ""}
 
-    return freight_results  # Returns a dictionary with all freight options
+    # --- ADD LOGGI CUSTOM LOGIC HERE ---
+    clean_zip = customer_zip_code.replace("-", "")
+    if len(clean_zip) >= 2:
+        zip_prefix = clean_zip[:2]
+        # Check if region is Centro (20), Zona Sul (22), or Zona Oeste (23) AND max 5 units
+        if zip_prefix in ['20', '22', '23'] and int(quantity) <= 5:
+            freight_results["LOGGI"] = {
+                "valor": "12.90",
+                "prazo": "4"
+            }
+
+    return freight_results
+
 
 
 from twilio.rest import Client

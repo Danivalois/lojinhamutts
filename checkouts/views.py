@@ -69,9 +69,9 @@ def checkout_view(request):
         if product_wgt > 30 or product.product_length>70 or product.product_width>70 or product.product_height>70 or product_cubado>90:
             messages.error(request, "Dimensões do produto ou peso excedendo o limite")
             return redirect(reverse('checkouts:precheckout') + f"?productCode={product_code}")
-    
+        
+        freight_data = fetch_freight_cost(zip_code, product_wgt, product.product_height, product.product_width, product.product_length, quantity)
             # Fetch freight costs for all services
-        freight_data = fetch_freight_cost(zip_code, product_wgt, product.product_height, product.product_width, product.product_length)
 
 
         # Prefill checkout form dynamically
@@ -92,7 +92,8 @@ def checkout_view(request):
         qty=float(quantity)
         total_price = (pu * qty)
         # Loop through freight data and populate the form
-        for service in ["SEDEX", "PAC", "PACMINI", "JADLOG_EXP"]:
+# UPDATE HERE: Add "LOGGI" to the list of services
+        for service in ["SEDEX", "PAC", "PACMINI", "JADLOG_EXP", "LOGGI"]:
             form_initial_data[f"price_{service.lower()}"] = freight_data.get(service, {}).get("valor", "Unavailable")
             form_initial_data[f"leadtime_{service.lower()}"] = freight_data.get(service, {}).get("prazo", "Unavailable")
             if freight_data.get(service, {}).get("valor", "Unavailable") == "0.00":
@@ -101,6 +102,7 @@ def checkout_view(request):
               form_initial_data[f"total_{service.lower()}"] = float(freight_data.get(service, {}).get("valor", "Unavailable"))+total_price
         # Calculate total price with PAC as the default shipping option (you can change this)
         form = CheckoutForm(initial=form_initial_data)
+        print("XXXX form", form)
         return render(request, 'checkout/checkout.html', {'form': form})
 
     # If accessed via GET, redirect with productCode in URL
@@ -142,10 +144,9 @@ def validate_cpf(request):
         qty = float(request.POST.get("order_quantity", "1"))  # Default to 1 to avoid division by zero
         total_price = float(pu) * qty  # Calculate total product price
         # Loop through each shipping option
-        for service in ["sedex", "pac", "pacmini", "jadlog_exp"]:
-            # Convert price from form (e.g., "10,00" to 10.00)
+
+        for service in ["sedex", "pac", "pacmini", "jadlog_exp", "loggi"]:
             freight_price = round(float(request.POST.get(f"price_{service}", "0")), 2)
-            # Calculate total including freight
             form_data[f"total_{service}"] = round(freight_price + total_price, 2)
            
         
