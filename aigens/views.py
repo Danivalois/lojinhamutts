@@ -85,8 +85,7 @@ import os
 import time
 import json
 import requests
-from google.oauth2 import service_account
-import google.auth.transport.requests
+
 
 
 
