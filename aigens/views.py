@@ -90,36 +90,42 @@ from google.oauth2 import service_account # ADICIONE ESTE IMPORT NO TOPO
 # Remova aquele bloco do "TRUQUE PARA O VERCEL" que criava o arquivo /tmp/, não vamos mais usá-lo.
 
 def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=5):
-    projects = os.environ.get("GOOGLE_CLOUD_PROJECT", "False")
+    projects = os.environ.get("GOOGLE_CLOUD_PROJECT", "teste-449215")
     
-    # --- NOVA LÓGICA DE CREDENCIAIS DIRETO DA VARIÁVEL ---
     credenciais_obj = None
     cred_json_string = os.environ.get("GOOGLE_CREDENTIALS_JSON")
     
+    # 1. TENTA MODO VERCEL (Lê da memória se a variável existir e for um JSON válido)
     if cred_json_string:
         try:
-            # Converte a string da Vercel para um dicionário Python
             cred_dict = json.loads(cred_json_string)
-            # Cria o objeto de credencial na memória!
             credenciais_obj = service_account.Credentials.from_service_account_info(cred_dict)
         except Exception as e:
-            print(f"Erro ao carregar as credenciais do Vercel: {e}")
-            return None
+            print(f"Ignorando JSON da memória, caindo para modo local. Erro: {e}")
 
-    # Inicializa o cliente com as credenciais na memória
-    client = genai.Client(
-        vertexai=True, 
-        project=projects, 
-        location="global",
-        credentials=credenciais_obj # <- PASSANDO AS CREDENCIAIS AQUI
-    )
+    # 2. INICIALIZA O CLIENTE
+    if credenciais_obj:
+        # VERCEL: Usa as credenciais injetadas da memória
+        client = genai.Client(
+            vertexai=True, 
+            project=projects, 
+            location="global",
+            credentials=credenciais_obj
+        )
+    else:
+        # LOCAL: O SDK do Google puxa automaticamente o caminho do GOOGLE_APPLICATION_CREDENTIALS do seu .env
+        client = genai.Client(
+            vertexai=True, 
+            project=projects, 
+            location="global"
+        )
     
     print("XXXXX contents, temp, safety pre engine TEXT", contents, temp, cand_count, tp, tk, safety )
     
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-pro',
+                model='gemini-2.5-pro', # Ajustado para o modelo estável
                 contents=contents,
                 config={
                     "temperature": temp,
