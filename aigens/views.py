@@ -81,51 +81,66 @@ def generate_prompt_view(request):
 
 
 
+from google.oauth2 import service_account # ADICIONE ESTE IMPORT NO TOPO
+
 import os
 import time
 import json
 from google import genai
-from google.oauth2 import service_account # ADICIONE ESTE IMPORT NO TOPO
 
-# Remova aquele bloco do "TRUQUE PARA O VERCEL" que criava o arquivo /tmp/, não vamos mais usá-lo.
+import os
+import time
+from google import genai
 
 def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=5):
-    projects = os.environ.get("GOOGLE_CLOUD_PROJECT", "teste-449215")
+    project_id = "teste-449215"
     
-    credenciais_obj = None
-    cred_json_string = os.environ.get("GOOGLE_CREDENTIALS_JSON")
+    # 1. TESTE HARDCODED: Cole TODO o conteúdo do seu arquivo .json aqui dentro das aspas triplas
+    json_string = """{
+  "type": "service_account",
+  "project_id": "teste-449215",
+  "private_key_id": "f194574e2dfbbf8cd3f4be266b7bb0f363c9461f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDA2ClYPNTFHf/U\nQHR4l7kcwArCmZpmAAtLm3qqRKlFWep4UfBncU2JmclSo8P/M/ofc3MJc8qURrfd\nZWTclAD75UDegNaaxYwLs13N+xcMRLw368ayDfgZtNt40UrcHlQD2OFVJZzIu+0B\nd8ezLA7Twg5M9Ig6O3lt6CL52wetuqJc9j8ZUYZjsY2ccFT3h9xrQqOrl78/hdn0\nWNXJUzuMC2Qajfy7SGyTWGkdrsB3ciKN3Xg364IRxdYDsLu/XIKX+CouqWnEvjy1\nBoucIT/1vA42e3mGNDuIbQpLVbWrg+hH6DIfdfgOfgVDwuyvfOF1XpBTyPqjRlqY\nj1+Aa/ofAgMBAAECggEAIIx7kfqWePzCwNruLaqCIoGhb04Iut2YCndgIVv8bAms\nowlFd9guW6K60bl1a94kgel1CavjDdrPzsz91KMgdWOw6r05O59LL3BjTVBrh/UU\nBaZEf6oO7ZvSjVZZ+cQerxWMltgF2fWqH5zNdobhq8ktq7x8P8PpD21mdeCLr70s\nwnaDcQAsEUOedAEjLCo6XpiY83g4jqNg+JByeR9qMSuO+5KMowLfqZUP4dIpQfS4\ndPeHRqe59m2epyBWsXPRhfoh1oCXYYsJs0SdOKc0ZPV4YHDZJ9o4W2SyOEi0RG/V\nU1s4XHfo5uSjOrd9c5+TQy0tKHgiAumF+38+nfhA3QKBgQDx86A1qpwvP8qbIzyZ\nDWjZMcZBQVQuGzv11sahj7f4CWqJSXAS4eYvV1bFw88Xg60/rQ1sLPs6GafFSFQK\nwUei0wBnKm26H6NFWU+WuOS8iYDQN3UXu08eq4lvOa5aZUnYEZ0E6+rOL78bEfQS\nyM3JqB/bkeCjriqHlgU/qYpZowKBgQDMCpqlwPf92s+o8bgKVx3yfAMcvZNyEEJy\nrgWqTPrlcTUJubHu82t1Mi1Gkng9/hpkLPdWu8zGyoXuRv9hsls1Dqz9bV0G24Rm\n0jCQQRWVzm6FIRkpHCGGCPzLbWs3p0mh+dqRUKbSpb4o6pdEwFLA81cdU8X18IaH\nb1TDyCRdVQKBgQC9itrOUAqs5S+Gm3Mkf6HMzLaAdnpI6GLvs0LGXH2FnXLNfC+F\nS1z1Z1l98mixBiHaCWrDfPWOzXxmC8Ry7Hl/MAdXyqBNN+3DLTUxYUUoAhxcgaWE\nYuOXplAzRx+0hzbzQtEcgujef/8ZaNYpRRAZ01CpxT0TXSTKNReFiP7uOwKBgQCn\n6romWs47/c0T7glViSg+HEy7ZFBpeHQWyJwk8MEx/Z52aHnEelMe2bJk97k421uA\nwXizyk3V82mRFKCrGArzeSZoUY5TTGiD7crFjKpk5MQTj4+TQ3FbSx4vk9a+sE9q\nm6KCIGuJw5jhN15R2CzCWgCBRCYQJmewIbEShi1XGQKBgGvuJyph0LAiXEcRuP4N\nckwDaUSY502h12fra/3rfGBITRiG+wTbgB3Nj2cj8Vvjamuf4VkUtKub9kPJxlIf\nu3tYVr52YEZIU5DFeJMuYNmHf10MOJVKmPqgGmgcrSpfBbt0RrnlKwQQUPEKTRne\nEOt9KUZ5vLpSpqWP99W+7oY/\n-----END PRIVATE KEY-----\n",
+  "client_email": "ajax-backend@teste-449215.iam.gserviceaccount.com",
+  "client_id": "104464953281056038734",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ajax-backend%40teste-449215.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+"""
     
-    # 1. TENTA MODO VERCEL (Lê da memória se a variável existir e for um JSON válido)
-    if cred_json_string:
-        try:
-            cred_dict = json.loads(cred_json_string)
-            credenciais_obj = service_account.Credentials.from_service_account_info(cred_dict)
-        except Exception as e:
-            print(f"Ignorando JSON da memória, caindo para modo local. Erro: {e}")
+    # 2. Escreve a string hardcodada em um arquivo real dentro do servidor da Vercel
+    tmp_path = "/tmp/teste-449215-f194574e2dfb.json"
+    try:
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            f.write(json_string)
+        print("✅ Arquivo JSON temporário criado com sucesso na Vercel.")
+    except Exception as e:
+        print(f"❌ Erro ao criar arquivo temporário: {e}")
+            
+    # 3. Aponta o caminho para a biblioteca do Google
+    os.environ["GOOGLE_CREDENTIALS_JSON"] = tmp_path
 
-    # 2. INICIALIZA O CLIENTE
-    if credenciais_obj:
-        # VERCEL: Usa as credenciais injetadas da memória
+    # 4. Inicializa o cliente
+    try:
         client = genai.Client(
             vertexai=True, 
-            project=projects, 
-            location="global",
-            credentials=credenciais_obj
-        )
-    else:
-        # LOCAL: O SDK do Google puxa automaticamente o caminho do GOOGLE_APPLICATION_CREDENTIALS do seu .env
-        client = genai.Client(
-            vertexai=True, 
-            project=projects, 
+            project=project_id, 
             location="global"
         )
+        print("✅ Cliente Vertex AI inicializado.")
+    except Exception as e:
+        print(f"❌ Erro ao inicializar cliente: {e}")
+        return None
     
     print("XXXXX contents, temp, safety pre engine TEXT", contents, temp, cand_count, tp, tk, safety )
     
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-pro', # Ajustado para o modelo estável
+                model='gemini-2.5-pro',
                 contents=contents,
                 config={
                     "temperature": temp,
@@ -140,12 +155,14 @@ def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=
             return response
         
         except Exception as e:
-            print(f"DEBUG TEXT: Attempt {attempt+1} failed: {e}")
+            print(f"Tentativa {attempt+1} falhou: {e}")
             if "429" in str(e) or "500" in str(e):
                 time.sleep(11)
             else:
                 break
     return None
+
+
 
 def campaign_generator_view(request):
     generated_posts = None
