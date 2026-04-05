@@ -1,12 +1,18 @@
+
+
 {
-  "builds": [
-    {
-      "src": "mutts/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb" }
+  "builds": [{
+    "src": "mutts/wsgi.py",
+    "use": "@vercel/python",
+    "config": { "maxLambdaSize": "50mb" }
+  }],
+  "routes": [{
+    "src": "/(.*)",
+    "dest": "mutts/wsgi.py"
+  }],
+  "functions": {
+    "mutts/wsgi.py": {
+      "maxDuration": 60
     }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "mutts/wsgi.py" }
-  ]
+  }
 }
