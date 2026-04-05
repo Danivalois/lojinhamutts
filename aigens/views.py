@@ -142,7 +142,7 @@ def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-flash', #gemini-2.5-pro',
+                model='gemini-2.5-pro',
                 contents=contents,
             config=types.GenerateContentConfig(
                     # Adding your tool_config here:
