@@ -81,94 +81,92 @@ def generate_prompt_view(request):
 
 
 
-from google.oauth2 import service_account # ADICIONE ESTE IMPORT NO TOPO
-
 import os
 import time
 import json
-from google import genai
+import requests
+from google.oauth2 import service_account
+import google.auth.transport.requests
 
-import os
-import time
-from google import genai
+class MockResponse:
+    def __init__(self, text):
+        self.text = text
 
 def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=5):
-    project_id = "teste-449215"
+    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT", "teste-449215")
+    location = "us-central1"
     
-    # 1. TESTE HARDCODED: Cole TODO o conteúdo do seu arquivo .json aqui dentro das aspas triplas
-    json_string = """{
-  "type": "service_account",
-  "project_id": "teste-449215",
-  "private_key_id": "f194574e2dfbbf8cd3f4be266b7bb0f363c9461f",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDA2ClYPNTFHf/U\nQHR4l7kcwArCmZpmAAtLm3qqRKlFWep4UfBncU2JmclSo8P/M/ofc3MJc8qURrfd\nZWTclAD75UDegNaaxYwLs13N+xcMRLw368ayDfgZtNt40UrcHlQD2OFVJZzIu+0B\nd8ezLA7Twg5M9Ig6O3lt6CL52wetuqJc9j8ZUYZjsY2ccFT3h9xrQqOrl78/hdn0\nWNXJUzuMC2Qajfy7SGyTWGkdrsB3ciKN3Xg364IRxdYDsLu/XIKX+CouqWnEvjy1\nBoucIT/1vA42e3mGNDuIbQpLVbWrg+hH6DIfdfgOfgVDwuyvfOF1XpBTyPqjRlqY\nj1+Aa/ofAgMBAAECggEAIIx7kfqWePzCwNruLaqCIoGhb04Iut2YCndgIVv8bAms\nowlFd9guW6K60bl1a94kgel1CavjDdrPzsz91KMgdWOw6r05O59LL3BjTVBrh/UU\nBaZEf6oO7ZvSjVZZ+cQerxWMltgF2fWqH5zNdobhq8ktq7x8P8PpD21mdeCLr70s\nwnaDcQAsEUOedAEjLCo6XpiY83g4jqNg+JByeR9qMSuO+5KMowLfqZUP4dIpQfS4\ndPeHRqe59m2epyBWsXPRhfoh1oCXYYsJs0SdOKc0ZPV4YHDZJ9o4W2SyOEi0RG/V\nU1s4XHfo5uSjOrd9c5+TQy0tKHgiAumF+38+nfhA3QKBgQDx86A1qpwvP8qbIzyZ\nDWjZMcZBQVQuGzv11sahj7f4CWqJSXAS4eYvV1bFw88Xg60/rQ1sLPs6GafFSFQK\nwUei0wBnKm26H6NFWU+WuOS8iYDQN3UXu08eq4lvOa5aZUnYEZ0E6+rOL78bEfQS\nyM3JqB/bkeCjriqHlgU/qYpZowKBgQDMCpqlwPf92s+o8bgKVx3yfAMcvZNyEEJy\nrgWqTPrlcTUJubHu82t1Mi1Gkng9/hpkLPdWu8zGyoXuRv9hsls1Dqz9bV0G24Rm\n0jCQQRWVzm6FIRkpHCGGCPzLbWs3p0mh+dqRUKbSpb4o6pdEwFLA81cdU8X18IaH\nb1TDyCRdVQKBgQC9itrOUAqs5S+Gm3Mkf6HMzLaAdnpI6GLvs0LGXH2FnXLNfC+F\nS1z1Z1l98mixBiHaCWrDfPWOzXxmC8Ry7Hl/MAdXyqBNN+3DLTUxYUUoAhxcgaWE\nYuOXplAzRx+0hzbzQtEcgujef/8ZaNYpRRAZ01CpxT0TXSTKNReFiP7uOwKBgQCn\n6romWs47/c0T7glViSg+HEy7ZFBpeHQWyJwk8MEx/Z52aHnEelMe2bJk97k421uA\nwXizyk3V82mRFKCrGArzeSZoUY5TTGiD7crFjKpk5MQTj4+TQ3FbSx4vk9a+sE9q\nm6KCIGuJw5jhN15R2CzCWgCBRCYQJmewIbEShi1XGQKBgGvuJyph0LAiXEcRuP4N\nckwDaUSY502h12fra/3rfGBITRiG+wTbgB3Nj2cj8Vvjamuf4VkUtKub9kPJxlIf\nu3tYVr52YEZIU5DFeJMuYNmHf10MOJVKmPqgGmgcrSpfBbt0RrnlKwQQUPEKTRne\nEOt9KUZ5vLpSpqWP99W+7oY/\n-----END PRIVATE KEY-----\n",
-  "client_email": "ajax-backend@teste-449215.iam.gserviceaccount.com",
-  "client_id": "104464953281056038734",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ajax-backend%40teste-449215.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-"""
+    cred_env_value = os.environ.get("GOOGLE_CREDENTIALS_JSON")
     
-    # 2. Escreve a string hardcodada em um arquivo real dentro do servidor da Vercel
-    tmp_path = "/tmp/teste-449215-f194574e2dfb.json"
-    try:
-        with open(tmp_path, "w", encoding="utf-8") as f:
-            f.write(json_string)
-        print("✅ Arquivo JSON temporário criado com sucesso na Vercel.")
-    except Exception as e:
-        print(f"❌ Erro ao criar arquivo temporário: {e}")
-            
-    # 3. Aponta o caminho para a biblioteca do Google
-    os.environ["GOOGLE_CREDENTIALS_JSON"] = tmp_path
-
-    # 4. Inicializa o cliente
-    try:
-        client = genai.Client(
-            vertexai=True, 
-            project=project_id, 
-            location="global"
-        )
-        print("✅ Cliente Vertex AI inicializado.")
-    except Exception as e:
-        print(f"❌ Erro ao inicializar cliente: {e}")
+    if not cred_env_value:
+        print("❌ ERRO: GOOGLE_CREDENTIALS_JSON não encontrado nas variáveis.")
         return None
-    
-    print("XXXXX contents, temp, safety pre engine TEXT", contents, temp, cand_count, tp, tk, safety )
-    from google.genai import types
+        
+    try:
+        # A MÁGICA ACONTECE AQUI:
+        # Se o texto começar com '{', ele sabe que é a string da Vercel
+        if cred_env_value.strip().startswith('{'):
+            cred_dict = json.loads(cred_env_value)
+        # Se não, ele sabe que é o caminho do arquivo no seu PC (ex: C:/Users/...)
+        else:
+            with open(cred_env_value, 'r', encoding='utf-8') as f:
+                cred_dict = json.load(f)
+                
+    except Exception as e:
+        print(f"❌ ERRO ao tentar ler as credenciais: {e}")
+        return None
 
+    print("✅ Iniciando geração via REST API (Bypass Vercel)...")
 
     for attempt in range(max_retries):
         try:
-            response = client.models.generate_content(
-                model='gemini-2.5-pro',
-                contents=contents,
-            config=types.GenerateContentConfig(
-                    # Adding your tool_config here:
-                    tool_config=types.ToolConfig(
-                        function_calling_config=types.FunctionCallingConfig(
-                            mode="NONE"
-                        )
-                    ),
-                    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-                    temperature=temp,
-                    safety_settings=safety,
-                    candidate_count=cand_count,
-                    top_p=tp,
-                    top_k=tk,
-                    response_mime_type="application/json"
-                )
+            # Gera o token de acesso fresco "na raça"
+            credentials = service_account.Credentials.from_service_account_info(
+                cred_dict,
+                scopes=["https://www.googleapis.com/auth/cloud-platform"]
             )
-            print("XXXX response after engine", response)
-            return response
-        
-        except Exception as e:
-            print(f"Tentativa {attempt+1} falhou: {e}")
-            if "429" in str(e) or "500" in str(e):
-                time.sleep(11)
+            auth_req = google.auth.transport.requests.Request()
+            credentials.refresh(auth_req)
+            token = credentials.token
+
+            # Monta o pacote de dados para enviar direto ao Vertex AI
+            url = f"https://{location}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{location}/publishers/google/models/gemini-2.5-pro:generateContent"
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            payload = {
+                "contents": [{"role": "user", "parts": [{"text": contents}]}],
+                "generationConfig": {
+                    "temperature": temp,
+                    "topP": tp,
+                    "topK": tk,
+                    "candidateCount": cand_count,
+                    "responseMimeType": "application/json"
+                }
+            }
+            
+            # Envia o foguete
+            response = requests.post(url, headers=headers, json=payload)
+            
+            if response.status_code == 200:
+                resp_json = response.json()
+                text_result = resp_json["candidates"][0]["content"]["parts"][0]["text"]
+                print("✅ Sucesso! Texto gerado.")
+                return MockResponse(text_result)
             else:
-                break
+                print(f"❌ Falha na API (Status {response.status_code}): {response.text}")
+                if response.status_code == 429: # Cota excedida
+                    time.sleep(11)
+                else:
+                    break
+                    
+        except Exception as e:
+            print(f"❌ Tentativa {attempt+1} falhou com erro Python: {e}")
+            time.sleep(2)
+            
     return None
 
 
