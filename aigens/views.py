@@ -130,7 +130,7 @@ def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=
             token = credentials.token
 
             # Monta o pacote de dados para enviar direto ao Vertex AI
-            url = f"https://{location}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{location}/publishers/google/models/gemini-2.0-flash:generateContent"  #gemini-2.5-pro
+            url = f"https://{location}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{location}/publishers/google/models/gemini-2.5-pro:generateContent"  #gemini-2.5-pro
             
             headers = {
                 "Authorization": f"Bearer {token}",
