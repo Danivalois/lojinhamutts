@@ -136,20 +136,23 @@ def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=
         return None
     
     print("XXXXX contents, temp, safety pre engine TEXT", contents, temp, cand_count, tp, tk, safety )
-    
+    from google.genai import types
+
+
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
                 model='gemini-2.5-flash', #gemini-2.5-pro',
                 contents=contents,
-                config={
-                    "temperature": temp,
-                    "safety_settings": safety,
-                    "candidate_count": cand_count,
-                    "top_p": tp,
-                    "top_k": tk,
-                    "response_mime_type": "application/json"
-                }
+            config=types.GenerateContentConfig(
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+                temperature=temp,
+                safety_settings=safety,
+                candidate_count=cand_count,
+                top_p=tp,
+                top_k=tk,
+                response_mime_type="application/json"
+                )
             )
             print("XXXX response after engine", response)
             return response
