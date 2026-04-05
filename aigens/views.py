@@ -88,85 +88,68 @@ import requests
 from google.oauth2 import service_account
 import google.auth.transport.requests
 
+
+
+
+import os
+import json
+import time
+import requests
+
 class MockResponse:
     def __init__(self, text):
         self.text = text
 
 def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=5):
-    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT", "teste-449215")
-    location = "us-central1"
-    
-    cred_env_value = os.environ.get("GOOGLE_CREDENTIALS_JSON")
-    
-    if not cred_env_value:
-        print("❌ ERRO: GOOGLE_CREDENTIALS_JSON não encontrado nas variáveis.")
-        return None
-        
-    try:
-        # A MÁGICA ACONTECE AQUI:
-        # Se o texto começar com '{', ele sabe que é a string da Vercel
-        if cred_env_value.strip().startswith('{'):
-            cred_dict = json.loads(cred_env_value)
-        # Se não, ele sabe que é o caminho do arquivo no seu PC (ex: C:/Users/...)
-        else:
-            with open(cred_env_value, 'r', encoding='utf-8') as f:
-                cred_dict = json.load(f)
-                
-    except Exception as e:
-        print(f"❌ ERRO ao tentar ler as credenciais: {e}")
+    print("XXXX contents", contents)
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+
+    if not api_key:
+        print("❌ ERRO: OPENAI_API_KEY não encontrado nas variáveis.")
         return None
 
-    print("✅ Iniciando geração via REST API (Bypass Vercel)...")
+    url = "https://api.openai.com/v1/chat/completions"
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
 
     for attempt in range(max_retries):
         try:
-            # Gera o token de acesso fresco "na raça"
-            credentials = service_account.Credentials.from_service_account_info(
-                cred_dict,
-                scopes=["https://www.googleapis.com/auth/cloud-platform"]
-            )
-            auth_req = google.auth.transport.requests.Request()
-            credentials.refresh(auth_req)
-            token = credentials.token
-
-            # Monta o pacote de dados para enviar direto ao Vertex AI
-            url = f"https://{location}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{location}/publishers/google/models/gemini-2.5-pro:generateContent" 
-            
-            headers = {
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json"
-            }
-            
             payload = {
-                "contents": [{"role": "user", "parts": [{"text": contents}]}],
-                "generationConfig": {
-                    "temperature": temp,
-                    "topP": tp,
-                    "topK": tk,
-                    "candidateCount": cand_count,
-                    "responseMimeType": "application/json"
-                }
+                "model": "gpt-4o-mini",  # fast + cheap; can switch to gpt-4o if needed
+                "messages": [
+                    {"role": "user", "content": contents}
+                ],
+                "temperature": temp,
+                "top_p": tp,
+                "n": cand_count,
+                "response_format": {"type": "json_object"}  # 🔥 forces valid JSON
             }
-            
-            # Envia o foguete
+
             response = requests.post(url, headers=headers, json=payload)
-            
+
             if response.status_code == 200:
                 resp_json = response.json()
-                text_result = resp_json["candidates"][0]["content"]["parts"][0]["text"]
-                print("✅ Sucesso! Texto gerado.")
+                text_result = resp_json["choices"][0]["message"]["content"]
+
+                print("✅ Sucesso! Texto gerado (OpenAI).")
                 return MockResponse(text_result)
+
             else:
                 print(f"❌ Falha na API (Status {response.status_code}): {response.text}")
-                if response.status_code == 429: # Cota excedida
-                    time.sleep(11)
+
+                if response.status_code == 429:
+                    time.sleep(2 ** attempt)  # exponential backoff
                 else:
                     break
-                    
+
         except Exception as e:
             print(f"❌ Tentativa {attempt+1} falhou com erro Python: {e}")
-            time.sleep(2)
-            
+            time.sleep(2 ** attempt)
+
     return None
 
 
