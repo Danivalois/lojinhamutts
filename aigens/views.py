@@ -145,13 +145,19 @@ def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=
                 model='gemini-2.5-flash', #gemini-2.5-pro',
                 contents=contents,
             config=types.GenerateContentConfig(
-                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-                temperature=temp,
-                safety_settings=safety,
-                candidate_count=cand_count,
-                top_p=tp,
-                top_k=tk,
-                response_mime_type="application/json"
+                    # Adding your tool_config here:
+                    tool_config=types.ToolConfig(
+                        function_calling_config=types.FunctionCallingConfig(
+                            mode="NONE"
+                        )
+                    ),
+                    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+                    temperature=temp,
+                    safety_settings=safety,
+                    candidate_count=cand_count,
+                    top_p=tp,
+                    top_k=tk,
+                    response_mime_type="application/json"
                 )
             )
             print("XXXX response after engine", response)
