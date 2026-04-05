@@ -1,0 +1,82 @@
+{% extends 'base_layout_ops_customer.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .marketing-menu-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60px; /* Pushes it down below your fixed header */
+        padding: 20px;
+        gap: 25px; /* Space between buttons */
+    }
+
+    .marketing-btn {
+        background-color: #000080; /* Matches the Mutts dark blue theme */
+        color: #ffffff;
+        text-decoration: none;
+        width: 100%;
+        max-width: 320px; /* Keeps it looking good on desktop too */
+        padding: 25px 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .marketing-btn:hover {
+        background-color: #000050;
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    .marketing-btn-title {
+        display: block;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .marketing-btn-subtitle {
+        display: block;
+        font-size: 14px;
+        opacity: 0.85;
+        line-height: 1.4;
+    }
+
+
+/* 2. Base padding for Mobile screens */
+#content {
+    /* Adjust this to match your mobile header's exact height */
+    padding-top: 0px; 
+}
+
+/* 3. Larger padding for Desktop screens */
+@media (min-width: 768px) {
+    #content {
+        /* The desktop header in your image looks quite tall. 
+           Increase this pixel value until the first row fully clears the header. */
+        padding-top: 100px; 
+    }
+}
+
+
+
+</style>
+
+<div class="marketing-menu-container">
+    
+    <a href="{% url 'aigens:campaign_generator_view' %}" class="marketing-btn">
+        <span class="marketing-btn-title">Gerador de Campanhas</span>
+        <span class="marketing-btn-subtitle">Geração automatizada de legendas e textos estruturados (Pré-lançamento, Tração)</span>
+    </a>
+
+    <a href="{% url 'aigens:generate_prompt_view' %}" class="marketing-btn">
+        <span class="marketing-btn-title">Prompts Visuais</span>
+        <span class="marketing-btn-subtitle">Geração de prompts de imagem e vídeo</span>
+    </a>
+
+</div>
+
+{% endblock %}

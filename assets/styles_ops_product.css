@@ -12,6 +12,13 @@ html, body, p, a, ul, li {
   --secondary: #0A0B5B;
 }
 
+
+
+
+
+
+
+
 html {
   font-size: 30px; /* You might want to use a relative unit like rem here */
   min-height: 100%;

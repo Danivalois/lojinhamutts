@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Prompts Mágicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light pb-5">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Gerador de Prompts Mágicos ✨</h2>
+
+        {% if generated_prompt %}
+        <div class="card border-success mb-4 shadow-sm">
+            <div class="card-header bg-success text-white fw-bold">
+                Seu Prompt está pronto!
+            </div>
+            <div class="card-body">
+                <textarea id="promptOutput" class="form-control mb-3" rows="6" readonly>{{ generated_prompt }}</textarea>
+                <button onclick="copyPrompt()" class="btn btn-success w-100">📋 Copiar Prompt</button>
+            </div>
+        </div>
+        <hr>
+        {% endif %}
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-check form-switch mb-4">
+                        {{ form.is_video }}
+                        <label class="form-check-label fw-bold text-primary" for="{{ form.is_video.id_for_label }}">
+                            Criar prompt para VÍDEO?
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Produto Alvo (O Protagonista)</label>
+                            {{ form.produto }}
+                            {{ form.produto_custom }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Cenário (O Fundo)</label>
+                            {{ form.cenario }}
+                            {{ form.cenario_custom }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Elementos de Composição</label>
+                            {{ form.elementos }}
+                            {{ form.elementos_custom }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Iluminação</label>
+                            {{ form.luz }}
+                            {{ form.luz_custom }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Clima / Atmosfera</label>
+                            {{ form.clima }}
+                            {{ form.clima_custom }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Estilo Visual</label>
+                            {{ form.estilo }}
+                            {{ form.estilo_custom }}
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="p-3 bg-secondary bg-opacity-10 rounded border">
+                                <label class="form-label fw-bold text-dark">📐 Dimensões / Formato</label>
+                                {{ form.dimensao }}
+                                {{ form.dimensao_custom }}
+                                <small class="form-text text-muted">
+                                    Selecione o formato correto para onde a postagem será publicada.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="videoSection" class="p-3 mb-3 bg-primary bg-opacity-10 rounded border border-primary" style="display: none;">
+                        <h5 class="text-primary mb-3">🎥 Configurações de Vídeo</h5>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Ação da Cena</label>
+                                {{ form.video_acao }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Movimento de Câmera</label>
+                                {{ form.video_camera }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Velocidade</label>
+                                {{ form.video_velocidade }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mt-2 py-2 fw-bold">🪄 Gerar Prompt</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica para mostrar/esconder campos Customizar
+        document.querySelectorAll('.trigger-custom').forEach(function(select) {
+            select.addEventListener('change', function() {
+                // Encontra o input customizado que vem logo após o select (no DOM renderizado pelo Django)
+                let customInput = this.nextElementSibling;
+                if (this.value === 'custom') {
+                    customInput.style.display = 'block';
+                    customInput.required = true;
+                } else {
+                    customInput.style.display = 'none';
+                    customInput.required = false;
+                    customInput.value = '';
+                }
+            });
+        });
+
+        // Lógica para mostrar/esconder seção de vídeo
+        const isVideoCheck = document.getElementById('{{ form.is_video.id_for_label }}');
+        const videoSection = document.getElementById('videoSection');
+        
+        isVideoCheck.addEventListener('change', function() {
+            if (this.checked) {
+                videoSection.style.display = 'block';
+            } else {
+                videoSection.style.display = 'none';
+                // Reseta os campos de vídeo se desmarcar
+                document.querySelectorAll('.video-only').forEach(el => el.value = '');
+            }
+        });
+
+        // Lógica para o botão de Copiar
+        function copyPrompt() {
+            var copyText = document.getElementById("promptOutput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // Para mobile
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                alert("Prompt copiado com sucesso! Agora é só colar na IA.");
+            });
+        }
+    </script>
+</body>
+</html>

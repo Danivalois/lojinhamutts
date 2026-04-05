@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [
 
     "127.0.0.1",
     "localhost",
+    "192.168.0.7",
     "lojinhamutts2025.vercel.app",
     "lojinhamutts2025-git-main-dani-valois-projects.vercel.app",
     "lojinhamutts2025-6ah3ghlql-dani-valois-projects.vercel.app",  
@@ -90,6 +91,7 @@ INSTALLED_APPS = [
     'orders',
     'checkouts',
     'accounts',
+    'aigens',
 ]
 
 

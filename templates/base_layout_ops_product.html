@@ -1,15 +1,41 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-<body>
-  <head>
-    <link rel="stylesheet" href="{% static 'styles_ops_product.css' %}">
-    <link rel="icon" href="{% static 'favicon.ico' %}">
+<html lang="en">
+
+<style>/* 1. Ensure your header is fixed to the top */
+header {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Keeps it above the list */
+}
+
+/* 2. Base padding for Mobile screens */
+#content {
+    /* Adjust this to match your mobile header's exact height */
+    padding-top: 10px; 
+}
+
+/* 3. Larger padding for Desktop screens */
+@media (min-width: 768px) {
+    #content {
+        /* The desktop header in your image looks quite tall. 
+           Increase this pixel value until the first row fully clears the header. */
+        padding-top: 80px; 
+    }
+}</style>
+
+
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
+    <link rel="stylesheet" href="{% static 'styles_ops_product.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+</head>
+<body>
   <header>
-
     <div class="icons">
       <div class="add_product">
         <a href="{% url 'products:product_create' %}" class="add_prod"><img src="{% static 'plus_icon.png' %}" alt="addproduct"></a>
@@ -55,15 +81,9 @@
     </div>
   </header>
 
+  <div id="content">  {% block content %}
+    {% endblock %}
+  </div>
 
-
-
-    <div id="content">  <!-- Changed "wrapper" to "content" and ID -->
-      {% block content %}
-      {% endblock %}
-    </div>
-
-    
-    
 </body>
 </html>
