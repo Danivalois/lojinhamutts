@@ -1,6 +1,23 @@
 {% extends 'base_layout_ops.html' %}
 
 {% block content %}
+
+<style>
+#content {
+    /* Adjust this to match your mobile header's exact height */
+    padding-top: 0px; 
+}
+
+/* 3. Larger padding for Desktop screens */
+@media (min-width: 768px) {
+    #content {
+        /* The desktop header in your image looks quite tall. 
+           Increase this pixel value until the first row fully clears the header. */
+        padding-top: 40px; 
+    }
+}</style>
+
+
     <div class="login">
         <form class="site-form" action="{% url 'accounts:login' %}" method="post">
             {% csrf_token %}

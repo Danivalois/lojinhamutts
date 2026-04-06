@@ -1,6 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+<style>
+/* 2. Base padding for Mobile screens */
+#content {
+    /* Adjust this to match your mobile header's exact height */
+    padding-top: 0px; 
+}
+
+/* 3. Larger padding for Desktop screens */
+@media (min-width: 768px) {
+    #content {
+        /* The desktop header in your image looks quite tall. 
+           Increase this pixel value until the first row fully clears the header. */
+        padding-top: 40px; 
+    }
+}</style>
+
 <body>
   <head>
     <link rel="stylesheet" href="{% static 'styles_ops_product.css' %}">
