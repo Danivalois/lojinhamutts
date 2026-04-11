@@ -50,8 +50,22 @@ def product_delete(request, product_code):
 
 client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+
+from django.utils.text import slugify
+import os
+
+def clean_filename(filename):
+    name, ext = os.path.splitext(filename)
+    clean_name = slugify(name)  # removes accents + spaces
+    return f"{clean_name}{ext.lower()}"
+
+
 def upload_to_supabase(file):
     filename = file.name
+    original_filename = file.name
+    filename = clean_filename(original_filename)
+
+
     content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
     file_data = file.read()
 
