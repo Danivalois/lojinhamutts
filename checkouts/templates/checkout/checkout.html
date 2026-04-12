@@ -2,15 +2,16 @@
 {% load static %}
 {% block content %}
 
-
 {% load l10n %}
-
-
-
-
 
     <head>
         <link rel="stylesheet" href="{% static 'mutts_styles_checkout.css' %}">
+        
+        <style>
+            :root {
+                --secondary: #714E38 !important;
+            }
+        </style>
     </head>
 
     <form method="POST" action="{% url 'checkouts:validate_cpf' %}" readonly>
@@ -18,7 +19,7 @@
         <input type="hidden" name="price_loggi" value="{{ form.price_loggi.value }}">
         <input type="hidden" name="leadtime_loggi" value="{{ form.leadtime_loggi.value}}">
         <input type="hidden" name="total_loggi" value="{{ form.total_loggi.value }}">
-           
+            
 
         <input type= "hidden" name="product_unit_price" value="{{ form.product_unit_price.value }}">
         <input type="hidden" name="customer_street" value="{{ form.customer_street.value }}">
@@ -41,10 +42,6 @@
         <input type="hidden" name="total_pacmini" value="{{ form.total_pacmini.value }}">   
         <input type="hidden" name="total_pac" value="{{ form.total_pac.value }}"> 
         <input type="hidden" name="total_sedex" value="{{ form.total_sedex.value }}">
-
-
-
-
 
     <div class="grade_product">
         <div class="product_image">
@@ -107,17 +104,8 @@
 
     <h6>FRETE</h6>
     
-    
-    
-    
-    
-    
     <div class="flex_container">
         <div class="freight_container_1">
-
-
-
-
 
             {% if form.price_loggi.value and form.price_loggi.value != "0.00" and form.price_loggi.value != "Unavailable" %}
             <label class="freight_option">
@@ -135,12 +123,6 @@
                 </div>
             </label>
             {% endif %}
-
-
-
-
-
-
 
             {% if form.price_pacmini.value != "0.00" and form.price_pacmini.value != "Unavailable" %}
             <label class="freight_option">
@@ -218,9 +200,6 @@
     </div>
     
 
-    
-
-
     <div class="final_div">
         <div class="terms_use">
             <label for="terms-checkbox">
@@ -248,6 +227,5 @@
     <button type="submit">Ir para Pagamento</button>
     </div>
 </form>
-
 
 {% endblock %}

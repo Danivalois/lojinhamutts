@@ -4,7 +4,11 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'mutts_styles_pckout.css' %}?v={{ timestamp }}">
-    
+    <style>
+        :root {
+            --secondary: #714E38 !important;
+        }
+    </style>
 </head>
     <form method="POST" action="{% url 'checkouts:checkout' %}">
     {% csrf_token %}

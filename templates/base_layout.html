@@ -1,20 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+  <head>
+      <link rel="stylesheet" href="{% static 'styles.css' %}">
+      <link rel="icon" href="{% static 'favicon.ico' %}">
+      <meta charset="utf-8">
+      
+      <style>
+          .main-header, footer {
+              background-color: #e4d0a8 !important;
+          }
+      </style>
+  </head>
   <body>
-    <head>
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
-        <link rel="icon" href="{% static 'favicon.ico' %}">
-        <meta charset="utf-8">
-    </head>
-
- 
       <div class="main-header">
           <div class="logo_mutts">
-            <img src="{% static 'logo_mutts.png' %}" alt="logo_mutts">
+            <img src="{% static 'logo_mutts.png' %}" width="105" alt="logo_mutts">
           </div>
       </div>
-
 
       <div class="wrapper">
         {% block content %}
@@ -22,7 +25,7 @@
       </div>
 
       <footer>
-        <div class="copyright">Copyright © 2025 Lojinha Mutts</div>
+        <div class="copyright">Copyright © 2026 Mutts Papelaria Pet</div>
         <ul class="social">
             <li>
                 <a href="https://www.instagram.com/muttspets/">
@@ -32,11 +35,5 @@
         </ul>
     </footer>
 
-
-
-
-
-
   </body>
-  
 </html>
