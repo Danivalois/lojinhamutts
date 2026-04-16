@@ -152,7 +152,24 @@ def send_whatsapp(order):
 
         print("Sent to:", phone, "SID:", msg.sid)
 
+import requests
+import urllib.parse
 
+def send_whatsapp_simple(order, total_amount):
+    cb_key = os.environ.get("CHATBOTKEY"),
+    admin_phone = +5521996368806 # e.g., "+5521999999999"
+   
+    
+    message = f"📦 *Novo Pedido:* {order.order_ID} | Valor: R$ {total_amount:.2f} | Status: {order.order_status}"
+    encoded_message = urllib.parse.quote(message)
+    
+    url = f"https://api.callmebot.com/whatsapp.php?phone={admin_phone}&text={encoded_message}&apikey={cb_key}"
+    
+    try:
+        requests.get(url)
+        print("✅ Simple WhatsApp alert sent.")
+    except Exception as e:
+        print(f"❌ Simple WhatsApp alert failed: {e}")
 
 def send_order_emails(order):
     """
@@ -171,7 +188,7 @@ def send_order_emails(order):
             "product_image_url": product_image_url  # Pass Image URL
         })
         print("XXXX call send whatsapp")
-        send_whatsapp(order)
+        send_whatsapp_simple(order, total_order_amount)
         send_mail(
             subject=admin_subject,
             message="teste admin",

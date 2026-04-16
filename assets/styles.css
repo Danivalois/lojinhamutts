@@ -110,7 +110,7 @@ footer {
 
 /* desktop */
 
-@media screen and (min-width: 1000px){
+@media screen and (min-width: 1200px){
   html {
     font-size: 15px;
     height: 100%; /* Ensure the HTML and body take up the full viewport */
