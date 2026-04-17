@@ -110,7 +110,7 @@ footer {
 
 /* desktop */
 
-@media screen and (min-width: 1200px){
+@media screen and (min-width: 1024px){
   html {
     font-size: 15px;
     height: 100%; /* Ensure the HTML and body take up the full viewport */
@@ -128,6 +128,7 @@ footer {
   align-items: center; /* Centers content vertically */
 }
 .logo_mutts img {
-  width: 180px; /* Smaller logo for large screens */
+  width: 95px; /* Smaller logo for large screens */
+  padding: 10px 0px 8px 0px;
 }
 }
