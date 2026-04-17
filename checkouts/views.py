@@ -22,16 +22,19 @@ MERCADOPAGO_ACCESS_TOKEN = os.getenv("MERCADOPAGO_ACCESS_TOKEN")  # Store in .en
 
 
 def precheckout_view(request):
+    print("XXX inside precheckout")
     product_code = request.GET.get('productCode', '').strip()  # ✅ Default to empty string if missing
     if not product_code:  
         raise Http404("Product code is missing")
     product = get_object_or_404(Product, product_code=product_code)  # ✅ Now it won't crash
+    print("XXXX url", product.product_image_url)
     form = PrecheckoutForm(initial={
         'product_code': product.product_code,
         'product_short_description': product.product_short_description,
         'product_image_url': product.product_image_url,
         'product_unit_price': product.product_unit_price,        
     })
+    print("XXX form", form)
     return render(request, 'checkouts/precheckout.html', {'form': form})
 
 def custom_404_view(request, exception=None):
