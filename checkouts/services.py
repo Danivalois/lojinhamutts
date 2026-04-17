@@ -152,25 +152,54 @@ def send_whatsapp(order):
 
         print("Sent to:", phone, "SID:", msg.sid)
 
-import requests
+
+
+
+import os
 import urllib.parse
+import requests
+import threading
+
+# The background function remains exactly the same
+def send_background_request(url):
+    try:
+        requests.get(url, timeout=5) 
+        # Safely extracts just the phone number for the print statement so your keys don't print to the console
+        phone = url.split('phone=')[1].split('&')[0]
+        print(f"✅ WhatsApp alert sent to: {phone}")
+    except Exception as e:
+        print(f"❌ WhatsApp alert failed: {e}")
 
 def send_whatsapp_simple(order, total_amount):
-    cb_key = os.environ.get("CHATBOTKEY")
-    print("XXXX cb_key", cb_key)
-    admin_phone ="5521996368806" # e.g., "+5521999999999"
-   
+    # 1. Create a DICTIONARY pairing each phone number with its specific API key.
+    # It's best to pull these from your environment variables (.env file)
+    admin_contacts = {
+        "5521996368806": "9018015", # Replace with your actual env var names
+        "5521979234334": "3849428",  # Your second number and key
+    } 
     
     message = f"📦 *Novo Pedido:* {order.order_ID} | Valor: R$ {total_amount:.2f} | Status: {order.order_status}"
     encoded_message = urllib.parse.quote(message)
     
-    url = f"https://api.callmebot.com/whatsapp.php?phone={admin_phone}&text={encoded_message}&apikey=9018015"
+    # 2. Use .items() to loop through both the phone number AND the key at the same time
+    for phone, api_key in admin_contacts.items():
+        
+        # A quick safety check: if the API key is missing, skip to the next number
+        if not api_key:
+            print(f"⚠️ Warning: Missing API key for {phone}. Skipping.")
+            continue
 
-    try:
-        requests.get(url)
-        print("✅ Simple WhatsApp alert sent.")
-    except Exception as e:
-        print(f"❌ Simple WhatsApp alert failed: {e}")
+        # Insert BOTH the specific phone and its specific key into the URL
+        url = f"https://api.callmebot.com/whatsapp.php?phone={phone}&text={encoded_message}&apikey={api_key}"
+        
+        # Fire the background thread
+        thread = threading.Thread(target=send_background_request, args=(url,))
+        thread.start()
+        
+    print("🚀 All WhatsApp threads started. Moving on!")
+
+
+
 
 def send_order_emails(order):
     """
