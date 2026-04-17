@@ -83,14 +83,21 @@ class CheckoutForm(forms.Form):
 
     )
 
-    
+
+
 class PrecheckoutForm(forms.Form):
     product_code = forms.CharField(widget=forms.HiddenInput())
     product_short_description = forms.CharField(
-    required=False,  
-    widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # ✅ Keeps it visible and included in form submission
+        required=False,  
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
     )
-    product_image_url = forms.CharField(max_length=900)
+    # ✅ FIX: Hide the URL input and remove required so it doesn't crash if an image is missing
+    product_image_url = forms.CharField(
+        max_length=900, 
+        widget=forms.HiddenInput(),
+        required=False 
+    )
+
     product_unit_price = forms.DecimalField(
         disabled=True,  # Prevent user from editing
         required=False,  # Avoid validation issues

@@ -106,8 +106,7 @@ def checkout_view(request):
         # Calculate total price with PAC as the default shipping option (you can change this)
         form = CheckoutForm(initial=form_initial_data)
         print("XXXX form", form)
-        return render(request, 'checkout/checkout.html', {'form': form})
-
+        return render(request, 'checkouts/precheckout.html', {'form': form, 'product': product})
     # If accessed via GET, redirect with productCode in URL
     return redirect(reverse('checkouts:precheckout') + f"?productCode={request.GET.get('productCode', '')}")
 
