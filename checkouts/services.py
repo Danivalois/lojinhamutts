@@ -157,13 +157,14 @@ import urllib.parse
 
 def send_whatsapp_simple(order, total_amount):
     cb_key = os.environ.get("CHATBOTKEY")
+    print("XXXX cb_key", cb_key)
     admin_phone ="5521996368806" # e.g., "+5521999999999"
    
     
     message = f"📦 *Novo Pedido:* {order.order_ID} | Valor: R$ {total_amount:.2f} | Status: {order.order_status}"
     encoded_message = urllib.parse.quote(message)
     
-    url = f"https://api.callmebot.com/whatsapp.php?phone={admin_phone}&text={encoded_message}&apikey={cb_key}"
+    url = f"https://api.callmebot.com/whatsapp.php?phone={admin_phone}&text={encoded_message}&apikey=9018015"
 
     try:
         requests.get(url)
