@@ -22,7 +22,7 @@ MERCADOPAGO_ACCESS_TOKEN = os.getenv("MERCADOPAGO_ACCESS_TOKEN")  # Store in .en
 
 
 def precheckout_view(request):
-    print("XXX inside precheckout")
+    print("XXX inside")
     product_code = request.GET.get('productCode', '').strip()  # ✅ Default to empty string if missing
     if not product_code:  
         raise Http404("Product code is missing")
@@ -35,7 +35,7 @@ def precheckout_view(request):
         'product_unit_price': product.product_unit_price,        
     })
     print("XXX form", form)
-    return render(request, 'checkouts/precheckout.html', {'form': form})
+    return render(request, 'checkouts/precheckout.html', {'form': form, 'product': product})
 
 def custom_404_view(request, exception=None):
     return render(request, "404.html", status=404)
@@ -106,7 +106,8 @@ def checkout_view(request):
         # Calculate total price with PAC as the default shipping option (you can change this)
         form = CheckoutForm(initial=form_initial_data)
         print("XXXX form", form)
-        return render(request, 'checkouts/precheckout.html', {'form': form, 'product': product})
+        return render(request, 'checkout/checkout.html', {'form': form})
+
     # If accessed via GET, redirect with productCode in URL
     return redirect(reverse('checkouts:precheckout') + f"?productCode={request.GET.get('productCode', '')}")
 
