@@ -6,11 +6,53 @@ from .forms import EditProductForm, ProductForm
 from supabase import create_client
 import os
 import mimetypes
+import boto3
+from django.conf import settings
+import mimetypes
+
+
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET", "product-images")
 SUPABASE_PATH_PREFIX = os.getenv("SUPABASE_PATH_PREFIX", "products/")
+
+
+def upload_to_cloudflare(file):
+    original_filename = file.name
+    filename = clean_filename(original_filename) # Using your existing clean function
+    content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+
+    # 1. Initialize the S3 client to point to Cloudflare
+    s3_client = boto3.client(
+        's3',
+        endpoint_url=settings.CLOUDFLARE_R2_ENDPOINT,
+        aws_access_key_id=settings.CLOUDFLARE_ACCESS_KEY,
+        aws_secret_access_key=settings.CLOUDFLARE_SECRET_KEY,
+        region_name='auto'  # R2 ignores this, but boto3 requires it
+    )
+
+    full_path = f"products/{filename}"
+    print("XXXX uploading to R2 path:", full_path)
+
+    # 2. Upload the file to the bucket
+    s3_client.upload_fileobj(
+        file,
+        settings.CLOUDFLARE_BUCKET_NAME,
+        full_path,
+        ExtraArgs={
+            'ContentType': content_type,
+            # We don't need 'x-upsert' here; boto3 overwrites files with the same name by default
+        }
+    )
+
+    # 3. Construct and return the public URL so the view can save it to the database
+    public_url = f"{settings.CLOUDFLARE_PUBLIC_DOMAIN}/{full_path}"
+    print("XXXX new public url:", public_url)
+    
+    return public_url
+
+
 
 @login_required(login_url="/accounts/login/")
 def product_list(request):
@@ -31,7 +73,7 @@ def product_create(request):
             # Upload new image if provided
             uploaded_file = request.FILES.get("image_upload")
             if uploaded_file:
-                product.product_image_url = upload_to_supabase(uploaded_file)
+                product.product_image_url = upload_to_cloudflare(uploaded_file)
             product.save()
         return redirect('products:product_list')
     else:
@@ -98,7 +140,7 @@ def product_edit(request, product_code):
             # Upload new image if provided
             uploaded_file = request.FILES.get("image_upload")
             if uploaded_file:
-                product.product_image_url = upload_to_supabase(uploaded_file)
+                product.product_image_url = upload_to_cloudflare(uploaded_file)
 
             product.save()
             return redirect('products:product_list')
