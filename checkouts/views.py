@@ -358,6 +358,7 @@ def payment_success(request):
     })
 
 def payment_failure(request):
+    print("XXX failure")
     return render(request, "checkouts/payment_failure.html", {"message": "O pagamento falhou. Tente novamente."})
 
 def payment_pending(request):
