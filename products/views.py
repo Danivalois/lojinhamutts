@@ -3,7 +3,7 @@ from .models import Product
 from django.contrib.auth.decorators import login_required
 from . import forms
 from .forms import EditProductForm, ProductForm
-from supabase import create_client
+
 import os
 import mimetypes
 import boto3
@@ -12,10 +12,6 @@ import mimetypes
 
 
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET", "product-images")
-SUPABASE_PATH_PREFIX = os.getenv("SUPABASE_PATH_PREFIX", "products/")
 
 
 def upload_to_cloudflare(file):
@@ -96,7 +92,7 @@ def product_delete(request, product_code):
     print (product_code)
     return render(request, 'products/product_delete.html', {'product': product})
 
-client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
 
 
 from django.utils.text import slugify
@@ -108,30 +104,6 @@ def clean_filename(filename):
     return f"{clean_name}{ext.lower()}"
 
 
-def upload_to_supabase(file):
-    filename = file.name
-    original_filename = file.name
-    filename = clean_filename(original_filename)
-
-
-    content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
-    file_data = file.read()
-
-    full_path = f"{SUPABASE_PATH_PREFIX}{filename}"
-    print("XXXX full_path", full_path)
-    # Upload the image
-    client.storage.from_(SUPABASE_BUCKET).upload(
-        path=full_path,
-        file=file_data,
-        file_options={
-            "content-type": content_type,
-            "x-upsert": "true"
-        }
-    )
-
-    public_url = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/{full_path}"
-    print("XXXX public url", public_url)
-    return public_url
 
 @login_required(login_url="/accounts/login/")
 def product_edit(request, product_code):
