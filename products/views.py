@@ -19,6 +19,8 @@ SUPABASE_PATH_PREFIX = os.getenv("SUPABASE_PATH_PREFIX", "products/")
 
 
 def upload_to_cloudflare(file):
+    
+    bucket_name = os.environ.get('CLOUDFLARE_BUCKET_NAME')
     original_filename = file.name
     filename = clean_filename(original_filename) # Using your existing clean function
     content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
@@ -36,9 +38,13 @@ def upload_to_cloudflare(file):
     print("XXXX uploading to R2 path:", full_path)
 
     # 2. Upload the file to the bucket
+
+
+
+
     s3_client.upload_fileobj(
         file,
-        settings.CLOUDFLARE_BUCKET_NAME,
+        bucket_name,
         full_path,
         ExtraArgs={
             'ContentType': content_type,
