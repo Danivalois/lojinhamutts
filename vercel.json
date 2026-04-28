@@ -3,15 +3,13 @@
     {
       "src": "mutts/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb" }
+      "config": { 
+        "maxLambdaSize": "50mb",
+        "maxDuration": 60
+      }
     }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "mutts/wsgi.py" }
-  ],
-  "functions": {
-    "**/*.py": {
-      "maxDuration": 60
-    }
-  }
+  ]
 }
