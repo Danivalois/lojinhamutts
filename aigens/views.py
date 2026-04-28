@@ -99,7 +99,7 @@ class MockResponse:
     def __init__(self, text):
         self.text = text
 
-def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=5):
+def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=2):
     print("XXXX contents", contents)
 
     api_key = os.environ.get("OPENAI_API_KEY")
@@ -141,7 +141,7 @@ def generate_with_retry(contents, temp, safety, cand_count, tp, tk, max_retries=
                 print(f"❌ Falha na API (Status {response.status_code}): {response.text}")
 
                 if response.status_code == 429:
-                    time.sleep(2 ** attempt)  # exponential backoff
+                    time.sleep(1 ** attempt)  # exponential backoff
                 else:
                     break
 

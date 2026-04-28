@@ -8,5 +8,10 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "mutts/wsgi.py" }
-  ]
+  ],
+  "functions": {
+    "**/*.py": {
+      "maxDuration": 60
+    }
+  }
 }
